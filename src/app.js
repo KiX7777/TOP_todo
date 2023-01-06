@@ -48,11 +48,11 @@ const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 
 button.addEventListener('click', () => {
-  const todo = createTask();
+  // const todo = createTask();
   // console.log(todo);
-  basicTodos.tasks.push(todo);
+  // basicTodos.tasks.push(todo);
   console.log(basicTodos.tasks);
-  showTasks();
+  // showTasks();
 });
 
 doTaskBtn.addEventListener('click', () => {
@@ -85,3 +85,6 @@ function showTasks() {
     el.textContent += `${task.title} `;
   });
 }
+
+const datum = document.querySelector('#duedate');
+console.log(datum.value);

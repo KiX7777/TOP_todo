@@ -10,9 +10,37 @@
     <script type="module" src="src/app.js"></script>
   </head>
   <body>
-    <h3>Todo List</h3>
-    <button class="napraviTask">NAPRAVI TASK</button>
-    <button class="odradiTask">ODRADI TASK</button>
-    <button class="obrišiTask">OBRIŠI TASK</button>
+    <div class="maincontainer">
+      <h3>Todo List</h3>
+      <button class="napraviTask">NAPRAVI TASK</button>
+      <button class="odradiTask">ODRADI TASK</button>
+      <button class="obrišiTask">OBRIŠI TASK</button>
+      <div class="overlay"></div>
+      <div class="popupmodal">
+        <form class="form" action="">
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Task name"
+          /><input
+            type="text"
+            name="description"
+            id="description"
+            placeholder="Description"
+          /><input
+            type="date"
+            name="duedate"
+            id="duedate"
+            placeholder="date"
+          /><input
+            type="text"
+            name="priority"
+            id="priority"
+            placeholder="What is the task priority"
+          /><input type="text" name="notes" id="notes" placeholder="Notes" />
+        </form>
+      </div>
+    </div>
   </body>
 </html>
