@@ -1,0 +1,22 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KiX7777/TOP_todo.git"
+  },
+  "author": "Kristian Božić",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KiX7777/TOP_todo/issues"
+  },
+  "homepage": "https://github.com/KiX7777/TOP_todo#readme",
+  "devDependencies": {
+    "parcel": "^2.8.2"
+  }
+}
