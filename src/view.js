@@ -1,11 +1,19 @@
 import controller from './controller.js';
 
+///SELEKTORI
+const overlay = document.querySelector('.overlay');
+const taskPopup = document.querySelector('.popupmodal');
+const listPopup = document.querySelector('.listModal');
+
 class View {
-  makeList() {
-    const addListBtn = document.querySelector('.napraviListu');
-    addListBtn.addEventListener('click', () => {
-      controller.addList();
-    });
+  createListPopup() {
+    overlay.style.display = 'block';
+    listPopup.style.display = 'block';
+  }
+
+  createTaskPopup() {
+    overlay.style.display = 'block';
+    taskPopup.style.display = 'block';
   }
 
   showTasks(list) {

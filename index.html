@@ -13,10 +13,9 @@
     <div class="maincontainer">
       <h3>Todo List</h3>
       <button class="napraviListu">NAPRAVI LISTU</button>
-      <button class="napraviTask">NAPRAVI TASK</button>
+      <button class="createTaskModal">NAPRAVI TASK</button>
       <button class="odradiTask">ODRADI TASK</button>
       <button class="obrišiTask">OBRIŠI TASK</button>
-      <div class="overlay"></div>
       <div class="popupmodal">
         <form class="form" action="">
           <input
@@ -38,10 +37,23 @@
             type="text"
             name="priority"
             id="priority"
-            placeholder="What is the task priority"
+            placeholder="What is the task priority (high/low)"
           /><input type="text" name="notes" id="notes" placeholder="Notes" />
+          <button class="addTask">ADD</button>
         </form>
       </div>
+      <div class="listModal">
+        <form action="" class="form">
+          <input
+            type="text"
+            name="listName"
+            id="listName"
+            placeholder="List name"
+          />
+          <button class="addList">ADD</button>
+        </form>
+      </div>
+      <div class="overlay"></div>
     </div>
   </body>
 </html>

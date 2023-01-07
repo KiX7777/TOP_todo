@@ -5,29 +5,54 @@ import { List } from './app.js';
 import view from './view.js';
 import { lists } from './app.js';
 
+const createTaskModal = document.querySelector('.createTaskModal');
+const confirmTaskCreation = document.querySelector('.addTask');
+const confirmListCreation = document.querySelector('.addList');
+const doTaskBtn = document.querySelector('.odradiTask');
+const deleteTaskBtn = document.querySelector('.obrišiTask');
+const datum = document.querySelector('#duedate');
+
+//INPUT VALUES SELECTORS
+
+// const titleInput = document.querySelector('#title').value;
+// const descriptionInput = document.querySelector('#description').value;
+// const dateInput = document.querySelector('#duedate').value;
+// const priorityInput = document.querySelector('#priority').value;
+// const notesInput = document.querySelector('#notes').value;
+
 export class Controller {
   createTask = () => {
-    let title = prompt('Task title');
-    if (!title || !title.trim().length === 0) {
+    let taskTitle = title.value;
+    if (!taskTitle || !taskTitle.trim().length === 0) {
       alert('TITLE IS MANDATORY');
       return;
     } else {
-      let description = prompt('Task description:');
-      let dueDate = prompt('What is the due date:');
-      if (!dueDate || !dueDate.trim().length === 0) {
+      let taskDescription = description.value;
+      let taskdueDate = duedate.value;
+      if (!taskdueDate || !taskdueDate.trim().length === 0) {
         alert('DATE IS MANDATORY');
         return;
       } else {
-        let priority = prompt('What is the task priority:');
-        let notes = prompt('Do you have any additional notes:');
-
-        return new Task(title, description, dueDate, priority, notes);
+        let taskPriority = priority.value;
+        if (taskPriority === 'high' || taskPriority === 'low') {
+          let taskNotes = notes.value;
+          return new Task(
+            taskTitle,
+            taskDescription,
+            taskdueDate,
+            taskPriority,
+            taskNotes
+          );
+        } else {
+          alert('CHOOSE BETWEEN HIGH AND LOW PRIORITY');
+          return;
+        }
       }
     }
   };
 
   createList() {
-    let naziv = prompt('Naziv liste');
+    let naziv = listName.value;
     if (!naziv || naziv.trim().length === 0) {
       alert('INSERT CORRECT LIST NAME');
       naziv = prompt('Naziv liste');
@@ -38,21 +63,27 @@ export class Controller {
   }
 
   addList() {
-    const novaLista = this.createList();
-    if (typeof novaLista !== 'object') return;
-    else {
-      console.log(typeof novaLista);
-      lists.push(novaLista);
-      console.log(lists);
-    }
+    confirmListCreation.addEventListener('click', (e) => {
+      e.preventDefault();
+      const novaLista = this.createList();
+      if (typeof novaLista !== 'object') return;
+      else {
+        console.log(typeof novaLista);
+        lists.push(novaLista);
+        console.log(lists);
+      }
+    });
+  }
+
+  startCreatingTask() {
+    createTaskModal.addEventListener('click', () => {
+      view.createTaskPopup();
+    });
   }
 
   addTask() {
-    const addTaskBtn = document.querySelector('.napraviTask');
-    const doTaskBtn = document.querySelector('.odradiTask');
-    const deleteTaskBtn = document.querySelector('.obrišiTask');
-    const datum = document.querySelector('#duedate');
-    addTaskBtn.addEventListener('click', () => {
+    confirmTaskCreation.addEventListener('click', (e) => {
+      e.preventDefault();
       let kojaLista = prompt('U koju listu želite dodati zadatak');
       let listIndex = lists.find((item) => item.title === kojaLista);
       if (!listIndex || listIndex === null) alert('THAT LIST DOES NOT EXIST');
