@@ -1,6 +1,9 @@
-'use strict';
+import controller, { Controller } from './controller.js';
+import view from './view.js';
+('use strict');
 
-class List {
+export let lists = [];
+export class List {
   constructor(title, tasks) {
     this.title = title;
     this.tasks = [];
@@ -9,7 +12,7 @@ class List {
 
 const basicTodos = new List('Basic');
 
-class Task {
+export class Task {
   constructor(title, description, dueDate, priority, notes) {
     (this.title = title),
       (this.description = description),
@@ -24,48 +27,38 @@ class Task {
   }
 }
 
-const createTask = () => {
-  let title = prompt('Task title');
-  let description = prompt('Task description:');
-  let dueDate = prompt('What is the due date:');
-  let priority = prompt('What is the task priority:');
-  let notes = prompt('Do you have any additional notes:');
-  return new Task(title, description, dueDate, priority, notes);
-};
+const overlay = document.querySelector('.overlay');
 
-const deleteTask = () => {
-  let name = prompt('What task do you want to delete');
-  // basicTodos.tasks.pop();
-  // let taskTitle = task;
-  const zaBrisati = basicTodos.tasks.find((item) => item.title === name);
-  let index = basicTodos.tasks.indexOf(zaBrisati);
-  basicTodos.tasks.splice(index, 1);
-  console.log(basicTodos.tasks);
-};
-
-const button = document.querySelector('.napraviTask');
+const addTaskBtn = document.querySelector('.napraviTask');
 const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 
-button.addEventListener('click', () => {
-  // const todo = createTask();
-  // console.log(todo);
-  // basicTodos.tasks.push(todo);
-  console.log(basicTodos.tasks);
-  // showTasks();
-});
+// ADD TASK
 
-doTaskBtn.addEventListener('click', () => {
-  for (let task of basicTodos.tasks) {
-    task.doTask();
-    console.log(task.isDone);
-  }
-});
+// addTaskBtn.addEventListener('click', () => {
+//   const todo = createTask();
+//   // console.log(todo);
+//   basicTodos.tasks.push(todo);
+//   console.log(basicTodos.tasks);
+//   view.showTasks(basicTodos);
+//   // overlay.style.display = 'block';
+// });
 
-deleteTaskBtn.addEventListener('click', () => {
-  deleteTask();
-  console.log(basicTodos);
-});
+//PRVO NAPRAVI LISTU
+
+// controller.addTask('kiko');
+
+// controller.doTaskBtn.addEventListener('click', () => {
+//   for (let task of basicTodos.tasks) {
+//     task.doTask();
+//     console.log(task.isDone);
+//   }
+// });
+
+// deleteTaskBtn.addEventListener('click', () => {
+//   deleteTask();
+//   console.log(basicTodos);
+// });
 
 // console.log(createTask());
 // const brijanje = createTask(
@@ -77,14 +70,14 @@ deleteTaskBtn.addEventListener('click', () => {
 
 // console.log(brijanje);
 
-function showTasks() {
-  let el = document.createElement('p');
-  document.querySelector('h3').appendChild(el);
-  basicTodos.tasks.forEach((task) => {
-    console.log(task.title);
-    el.textContent += `${task.title} `;
-  });
+const datum = document.querySelector('#duedate');
+// console.log(datum.value);
+
+function init() {
+  view.makeList();
+  controller.addTask();
+  controller.doTask();
+  view.deleteTask();
 }
 
-const datum = document.querySelector('#duedate');
-console.log(datum.value);
+init();
