@@ -106,6 +106,8 @@ export class Controller {
         view.resetForm('popupmodal');
         view.createTaskCard(todo);
         view.showSuccessMsg();
+        view.removeCard('taskContainer');
+        view.doTask('taskContainer', lists);
         setTimeout(view.hideSuccessMsg, 2000);
       }
     });
@@ -136,31 +138,28 @@ export class Controller {
   };
 
   doTask() {
-    const doTaskBtn = document.querySelector('.odradiTask');
-    doTaskBtn.addEventListener('click', () => {
-      let listName = prompt('From which list do you want to finish task');
-      // for (let task of lists[0].tasks) {
-      //   task.doTask();
-      //   console.log(task.isDone);
-      // }
+    let listName = prompt('From which list do you want to finish task');
+    // for (let task of lists[0].tasks) {
+    //   task.doTask();
+    //   console.log(task.isDone);
+    // }
 
-      let selectedList = lists.find((item) => item.title === listName);
-      if (!selectedList || selectedList === null) {
-        alert('THAT LIST DOES NOT EXIST');
-        return;
-      } else {
-        let taskname = prompt('What task do you want to finish');
-        let listIndex = lists.indexOf(selectedList);
-        const doTask = lists[listIndex].tasks.find(
-          (item) => item.title === taskname
-        );
-        if (!doTask || doTask === null) alert('THAT TASK DOES NOT EXIST');
+    let selectedList = lists.find((item) => item.title === listName);
+    if (!selectedList || selectedList === null) {
+      alert('THAT LIST DOES NOT EXIST');
+      return;
+    } else {
+      let taskname = prompt('What task do you want to finish');
+      let listIndex = lists.indexOf(selectedList);
+      const doTask = lists[listIndex].tasks.find(
+        (item) => item.title === taskname
+      );
+      if (!doTask || doTask === null) alert('THAT TASK DOES NOT EXIST');
 
-        let taskindex = lists[listIndex].tasks.indexOf(doTask);
-        lists[listIndex].tasks[taskindex].doTask();
-        console.log('TASK FINISHED');
-      }
-    });
+      let taskindex = lists[listIndex].tasks.indexOf(doTask);
+      lists[listIndex].tasks[taskindex].doTask();
+      console.log('TASK FINISHED');
+    }
   }
 }
 

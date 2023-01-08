@@ -73,7 +73,15 @@ body {
   align-items: center;
 }
 
-.deleteCardbtn {
+.cardBtns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.deleteCardbtn,
+.finishCardBtn {
   width: 2rem;
   cursor: pointer;
   transition: 0.4s all;
@@ -81,6 +89,10 @@ body {
 
 .deleteCardbtn:hover {
   color: red;
+}
+
+.finishCardBtn:hover {
+  color: rgb(4, 199, 4);
 }
 
 .maincontainer button {
@@ -111,9 +123,12 @@ body {
 .taskCard {
   width: 20rem;
   height: 20rem;
-  background-color: lightgreen;
+  background-color: rgb(218, 144, 218);
   padding: 1rem;
   display: flex;
+  border: 0.5px solid white;
+  box-shadow: 0 2px 7px -2px black;
+  border-radius: 1rem;
   flex-direction: column;
   gap: 0.5rem;
 }

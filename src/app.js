@@ -78,7 +78,7 @@ function init() {
   controller.startCreatingTask();
   controller.addList();
   controller.addTask();
-  controller.doTask();
+  // controller.doTask();
   view.deleteTask();
 }
 
