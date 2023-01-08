@@ -81,12 +81,17 @@ body {
 }
 
 .deleteCardbtn,
-.finishCardBtn {
+.finishCardBtn,
+.important {
   width: 2rem;
   cursor: pointer;
   transition: 0.4s all;
 }
 
+.important {
+  color: white;
+  fill: red;
+}
 .deleteCardbtn:hover {
   color: red;
 }
@@ -135,6 +140,9 @@ body {
 
 .taskCardinfo {
   font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
 .listCard::first-letter {
