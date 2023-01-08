@@ -6,11 +6,14 @@ import view from './view.js';
 import { lists } from './app.js';
 
 const createTaskModal = document.querySelector('.createTaskModal');
+const createListModal = document.querySelector('.createListModal');
 const confirmTaskCreation = document.querySelector('.addTask');
 const confirmListCreation = document.querySelector('.addList');
 const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 const datum = document.querySelector('#duedate');
+const listContainer = document.querySelector('.listsContainer');
+const deleteCardbtn = document.querySelector('.deleteCardbtn');
 
 //INPUT VALUES SELECTORS
 
@@ -33,20 +36,15 @@ export class Controller {
         alert('DATE IS MANDATORY');
         return;
       } else {
-        let taskPriority = priority.value;
-        if (taskPriority === 'high' || taskPriority === 'low') {
-          let taskNotes = notes.value;
-          return new Task(
-            taskTitle,
-            taskDescription,
-            taskdueDate,
-            taskPriority,
-            taskNotes
-          );
-        } else {
-          alert('CHOOSE BETWEEN HIGH AND LOW PRIORITY');
-          return;
-        }
+        let taskPriority = priority2.value;
+        let taskNotes = notes.value;
+        return new Task(
+          taskTitle,
+          taskDescription,
+          taskdueDate,
+          taskPriority,
+          taskNotes
+        );
       }
     }
   };
@@ -71,10 +69,20 @@ export class Controller {
         console.log(typeof novaLista);
         lists.push(novaLista);
         console.log(lists);
+        view.hideListPopup();
+        view.createListCard(novaLista);
+        view.resetForm('listModal');
+        // view.removeListCard();
+        view.removeCard('listsContainer');
       }
     });
   }
 
+  startCreatingList() {
+    createListModal.addEventListener('click', () => {
+      view.createListPopup();
+    });
+  }
   startCreatingTask() {
     createTaskModal.addEventListener('click', () => {
       view.createTaskPopup();
@@ -93,11 +101,12 @@ export class Controller {
         const todo = this.createTask();
         if (todo === undefined) return;
         else lists[index].tasks.push(todo);
-        // kojaLista.tasks.push(todo);
-        // lists.list.tasks.push(todo);
         console.log(lists[index].tasks);
-        view.showTasks(lists[index]);
-        // overlay.style.display = 'block';
+        view.hideTaskPopup();
+        view.resetForm('popupmodal');
+        view.createTaskCard(todo);
+        view.showSuccessMsg();
+        setTimeout(view.hideSuccessMsg, 2000);
       }
     });
   }
