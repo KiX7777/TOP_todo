@@ -136,31 +136,6 @@ export class Controller {
       }
     }
   };
-
-  doTask() {
-    let listName = prompt('From which list do you want to finish task');
-    // for (let task of lists[0].tasks) {
-    //   task.doTask();
-    //   console.log(task.isDone);
-    // }
-
-    let selectedList = lists.find((item) => item.title === listName);
-    if (!selectedList || selectedList === null) {
-      alert('THAT LIST DOES NOT EXIST');
-      return;
-    } else {
-      let taskname = prompt('What task do you want to finish');
-      let listIndex = lists.indexOf(selectedList);
-      const doTask = lists[listIndex].tasks.find(
-        (item) => item.title === taskname
-      );
-      if (!doTask || doTask === null) alert('THAT TASK DOES NOT EXIST');
-
-      let taskindex = lists[listIndex].tasks.indexOf(doTask);
-      lists[listIndex].tasks[taskindex].doTask();
-      console.log('TASK FINISHED');
-    }
-  }
 }
 
 export default new Controller();
