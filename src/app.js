@@ -79,7 +79,7 @@ function init() {
   controller.addList();
   controller.addTask();
   // controller.doTask();
-  view.deleteTask();
+  // view.deleteTask();
 }
 
 init();

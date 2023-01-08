@@ -109,13 +109,27 @@ class View {
     // let task = document.querySelector(`.${container}`);
   }
 
-  removeCard(container) {
+  removeCard(container, lists) {
     let buttonCont = document.querySelector(`.${container}`);
     buttonCont.querySelectorAll('.deleteCardbtn').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.stopImmediatePropagation();
         let card = e.target.parentNode;
         card.closest('.card').remove();
+
+        let deletecard = e.target.parentNode.closest('.card');
+        let taskname = deletecard.querySelector('.title').textContent;
+        console.log(taskname);
+        console.log(lists);
+
+        const deleteTask = lists[0].tasks.find(
+          (item) => item.title === taskname
+        );
+
+        let taskindex = lists[0].tasks.indexOf(deleteTask);
+        lists[0].tasks.splice(taskindex, 1);
+        console.log('TASK DELETED');
+        console.log(lists);
       });
     });
   }

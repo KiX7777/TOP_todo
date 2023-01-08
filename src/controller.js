@@ -73,7 +73,7 @@ export class Controller {
         view.createListCard(novaLista);
         view.resetForm('listModal');
         // view.removeListCard();
-        view.removeCard('listsContainer');
+        view.removeCard('listsContainer', lists);
       }
     });
   }
@@ -106,7 +106,7 @@ export class Controller {
         view.resetForm('popupmodal');
         view.createTaskCard(todo);
         view.showSuccessMsg();
-        view.removeCard('taskContainer');
+        view.removeCard('taskContainer', lists);
         view.doTask('taskContainer', lists);
         setTimeout(view.hideSuccessMsg, 2000);
       }
