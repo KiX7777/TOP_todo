@@ -24,7 +24,7 @@ const deleteCardbtn = document.querySelector('.deleteCardbtn');
 // const notesInput = document.querySelector('#notes').value;
 
 export class Controller {
-  createTask = () => {
+  createTask = (list) => {
     let taskTitle = title.value;
     if (!taskTitle || !taskTitle.trim().length === 0) {
       alert('TITLE IS MANDATORY');
@@ -43,7 +43,8 @@ export class Controller {
           taskDescription,
           taskdueDate,
           taskPriority,
-          taskNotes
+          taskNotes,
+          list
         );
       }
     }
@@ -98,7 +99,7 @@ export class Controller {
       else {
         let index = lists.indexOf(listIndex);
 
-        const todo = this.createTask();
+        const todo = this.createTask(kojaLista);
         if (todo === undefined) return;
         else lists[index].tasks.push(todo);
         console.log(lists[index].tasks);
@@ -115,8 +116,6 @@ export class Controller {
 
   deleteTask = () => {
     let listName = prompt('From which list do you want to delete');
-    // basicTodos.tasks.pop();
-    // let taskTitle = task;
 
     let selectedList = lists.find((item) => item.title === listName);
     if (!selectedList || selectedList === null) {

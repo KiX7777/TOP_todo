@@ -13,13 +13,14 @@ export class List {
 const basicTodos = new List('Basic');
 
 export class Task {
-  constructor(title, description, dueDate, priority, notes) {
+  constructor(title, description, dueDate, priority, notes, list) {
     (this.title = title),
       (this.description = description),
       (this.dueDate = new Date(dueDate).toLocaleString()),
       (this.priority = priority),
       (this.notes = notes);
     this.isDone = false;
+    this.list = list;
   }
 
   doTask() {
@@ -78,7 +79,7 @@ function init() {
   controller.startCreatingTask();
   controller.addList();
   controller.addTask();
-  // controller.doTask();
+  // controller.doTask('taskContainer');
   // view.deleteTask();
 }
 

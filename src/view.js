@@ -7,6 +7,7 @@ const listPopup = document.querySelector('.listModal');
 const successMsg = document.querySelector('.success');
 const listContainer = document.querySelector('.listsContainer');
 const taskContainer = document.querySelector('.taskContainer');
+const mainContainer = document.querySelector('.maincontainer');
 const dateInput = document.querySelector('#duedate');
 const priority = document.querySelector('#priority2');
 
@@ -55,10 +56,12 @@ class View {
   }
 
   createListCard(list) {
+    let id = 0;
     let card = document.createElement('div');
+
     // card.className = 'listCard';
     card.classList = 'card listCard';
-    card.innerHTML = ` ${list.title}   <svg
+    card.innerHTML = ` <p class="title">${list.title}</p>   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -73,6 +76,9 @@ class View {
     />
   </svg>`;
     listContainer.appendChild(card);
+    let taskcontainer = document.createElement('div');
+    taskcontainer.classList = `taskContainer ${list.title.replaceAll(' ', '')}`;
+    mainContainer.appendChild(taskcontainer);
   }
 
   removeListCard() {
@@ -88,6 +94,7 @@ class View {
   doTask(container, lists) {
     const cont = document.querySelector(`.${container}`);
     const button = cont.querySelectorAll('.finishCardBtn');
+    const check = document.querySelector('.checkBtn');
 
     button.forEach((btn) => {
       btn.addEventListener('click', (e) => {
@@ -98,9 +105,12 @@ class View {
 
         // let taskindex = lists[0].indexOf(naziv);
 
-        const doTask = lists[0].tasks.find((item) => item.title === taskname);
+        const deleteTask = lists[0].tasks.find(
+          (item) => item.title === taskname
+        );
 
-        let taskindex = lists[0].tasks.indexOf(doTask);
+        let taskindex = lists[0].tasks.indexOf(deleteTask);
+        debugger;
         lists[0].tasks[taskindex].doTask();
         console.log('TASK FINISHED');
       });
@@ -117,29 +127,47 @@ class View {
         let card = e.target.parentNode;
         card.closest('.card').remove();
 
-        let deletecard = e.target.parentNode.closest('.card');
-        let taskname = deletecard.querySelector('.title').textContent;
-        console.log(taskname);
-        console.log(lists);
+        let cardToDelete = e.target.parentNode.closest('.card');
+        let title = cardToDelete.querySelector('.title').textContent;
 
-        const deleteTask = lists[0].tasks.find(
-          (item) => item.title === taskname
+        let correctList = lists.find((item) => item.title === title);
+        let listIndex = lists.indexOf(correctList);
+        if (listIndex === -1) {
+          alert('LISTA NE POSTOJI');
+          return;
+        } else {
+          lists.splice(listIndex, 1);
+          console.log(lists);
+        }
+
+        // let correctTask = lista.find((item) => item.title === title);
+        // let taskIndex = lista.indexOf(correctTask);
+        // console.log(taskIndex);
+
+        console.log(typeof lists[0].tasks);
+        let findTask = lists[0].tasks.find(
+          (task) => task.title === title.trim()
         );
+        console.log(findTask);
+        let taskindex = lists[0].tasks.indexOf(findTask);
 
-        let taskindex = lists[0].tasks.indexOf(deleteTask);
         lists[0].tasks.splice(taskindex, 1);
-        console.log('TASK DELETED');
-        console.log(lists);
+        console.log(lists[0].tasks);
       });
     });
   }
 
   createTaskCard(task) {
     let card = document.createElement('div');
+    console.log(task.list);
+    const taskContainer = document.querySelector(
+      `.${task.list.replaceAll(' ', '')}`
+    );
+    console.log(taskContainer);
     card.classList = 'taskCard card';
     let shortDate = task.dueDate.slice(0, 13);
 
-    card.innerHTML = `    
+    card.innerHTML = `
                       <p class="taskCardinfo title"><strong>${
                         task.title
                       }</strong> ${
@@ -154,7 +182,7 @@ class View {
                       <p class="taskCardinfo"><strong>Due date: </strong>${shortDate}</p>
                       <p class="taskCardinfo"></p>
                       <p class="taskCardinfo">${task.notes}</p>
-                      
+
                       <div class="cardBtns ">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +198,7 @@ class View {
                             d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
                           />
                         </svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 finishCardBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 finishCardBtn checkBtn">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
