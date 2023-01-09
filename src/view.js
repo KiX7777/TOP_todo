@@ -106,7 +106,7 @@ class View {
         // let taskindex = lists[0].indexOf(naziv);
 
         const deleteTask = lists[0].tasks.find(
-          (item) => item.title === taskname
+          (item) => item.title === taskname.trim()
         );
 
         let taskindex = lists[0].tasks.indexOf(deleteTask);
@@ -130,7 +130,7 @@ class View {
         let cardToDelete = e.target.parentNode.closest('.card');
         let title = cardToDelete.querySelector('.title').textContent;
 
-        let correctList = lists.find((item) => item.title === title);
+        let correctList = lists.find((item) => item.title === title.trim());
         let listIndex = lists.indexOf(correctList);
         if (listIndex === -1) {
           alert('LISTA NE POSTOJI');
