@@ -94,14 +94,13 @@ class View {
   doTask(container, lists) {
     const cont = document.querySelector(`.${container}`);
     const button = cont.querySelectorAll('.finishCardBtn');
-    const check = document.querySelector('.checkBtn');
 
     button.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.stopImmediatePropagation();
         let card = e.target.parentNode.closest('.card');
         let taskname = card.querySelector('.title').textContent;
-        console.log(taskname);
+        const check = card.querySelector('.checkBtn');
 
         // let taskindex = lists[0].indexOf(naziv);
 
@@ -110,9 +109,11 @@ class View {
         );
 
         let taskindex = lists[0].tasks.indexOf(deleteTask);
-        debugger;
         lists[0].tasks[taskindex].doTask();
         console.log('TASK FINISHED');
+
+        check.style.fill = 'green';
+        check.style.color = 'white';
       });
     });
 
@@ -138,6 +139,7 @@ class View {
         } else {
           lists.splice(listIndex, 1);
           console.log(lists);
+          return;
         }
 
         // let correctTask = lista.find((item) => item.title === title);

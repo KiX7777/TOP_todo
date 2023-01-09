@@ -265,3 +265,10 @@ input[type='date']:before {
 .addTask:hover {
   background-color: rgb(118, 232, 192);
 }
+.taskCardinfo {
+  font-size: 1.4rem;
+}
+
+.taskCardinfo.title {
+  font-size: 1.8rem;
+}
