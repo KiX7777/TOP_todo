@@ -89,7 +89,7 @@ body {
 }
 
 .important {
-  color: white;
+  color: black;
   fill: red;
 }
 .deleteCardbtn:hover {
@@ -116,7 +116,7 @@ body {
 }
 
 .taskContainer {
-  background-color: lightcoral;
+  border-top: 1px solid black;
   flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, 20rem);
@@ -136,6 +136,10 @@ body {
   border-radius: 1rem;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.importantCard {
+  background-color: rgb(219, 219, 3);
 }
 
 .taskCardinfo {

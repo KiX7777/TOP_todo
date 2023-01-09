@@ -61,6 +61,8 @@ export class Controller {
     // const lista = new List(nazivListe);
   }
 
+  sortTasks() {}
+
   addList() {
     confirmListCreation.addEventListener('click', (e) => {
       e.preventDefault();

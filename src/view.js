@@ -114,6 +114,7 @@ class View {
 
         check.style.fill = 'green';
         check.style.color = 'white';
+        card.style.backgroundColor = 'lightgreen';
       });
     });
 
@@ -166,7 +167,11 @@ class View {
       `.${task.list.replaceAll(' ', '')}`
     );
     console.log(taskContainer);
-    card.classList = 'taskCard card';
+    if (task.priority === 'important') {
+      card.classList = 'taskCard card importantCard';
+    } else {
+      card.classList = 'taskCard card';
+    }
     let shortDate = task.dueDate.slice(0, 13);
 
     card.innerHTML = `
