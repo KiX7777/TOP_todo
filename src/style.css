@@ -136,6 +136,7 @@ body {
   border-radius: 1rem;
   flex-direction: column;
   gap: 0.5rem;
+  transition: 0.3s all;
 }
 
 .importantCard {
