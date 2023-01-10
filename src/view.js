@@ -92,29 +92,32 @@ class View {
   }
 
   doTask(container, lists) {
-    const cont = document.querySelector(`.${container}`);
-    const button = cont.querySelectorAll('.finishCardBtn');
+    const cont = document.querySelectorAll(`.${container}`);
 
-    button.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopImmediatePropagation();
-        let card = e.target.parentNode.closest('.card');
-        let taskname = card.querySelector('.title').textContent;
-        const check = card.querySelector('.checkBtn');
+    cont.forEach((container) => {
+      container.querySelectorAll('.finishCardBtn').forEach((button) => {
+        button.addEventListener('click', (e) => {
+          e.stopImmediatePropagation();
+          let card = e.target.parentNode.closest('.card');
+          let taskname = card.querySelector('.title').textContent;
+          const check = card.querySelector('.checkBtn');
 
-        // let taskindex = lists[0].indexOf(naziv);
+          let imeListe = card.dataset.listId;
+          let selectedList = lists.find((item) => item.title === imeListe);
+          let listIndex = lists.indexOf(selectedList);
 
-        const deleteTask = lists[0].tasks.find(
-          (item) => item.title === taskname.trim()
-        );
+          const deleteTask = lists[listIndex].tasks.find(
+            (item) => item.title === taskname.trim()
+          );
 
-        let taskindex = lists[0].tasks.indexOf(deleteTask);
-        lists[0].tasks[taskindex].doTask();
-        console.log('TASK FINISHED');
+          let taskindex = lists[listIndex].tasks.indexOf(deleteTask);
+          lists[listIndex].tasks[taskindex].doTask();
+          console.log('TASK FINISHED');
 
-        check.style.fill = 'green';
-        check.style.color = 'white';
-        card.style.backgroundColor = 'lightgreen';
+          check.style.fill = 'green';
+          check.style.color = 'white';
+          card.style.backgroundColor = 'lightgreen';
+        });
       });
     });
 
