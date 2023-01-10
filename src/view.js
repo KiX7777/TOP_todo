@@ -127,35 +127,36 @@ class View {
       btn.addEventListener('click', (e) => {
         e.stopImmediatePropagation();
         let card = e.target.parentNode;
+        console.log(card.parentElement);
+
         card.closest('.card').remove();
 
         let cardToDelete = e.target.parentNode.closest('.card');
         let title = cardToDelete.querySelector('.title').textContent;
 
-        let correctList = lists.find((item) => item.title === title.trim());
-        let listIndex = lists.indexOf(correctList);
-        if (listIndex === -1) {
-          alert('LISTA NE POSTOJI');
+        //LOGIKA -- UVJET ZA BRISANJE LISTE
+        // debugger;
+        console.log(cardToDelete.classList);
+        if (cardToDelete.classList.contains('listCard')) {
+          let correctList = lists.find((item) => item.title === title.trim());
+          let listIndex = lists.indexOf(correctList);
+          if (listIndex === -1) {
+            return;
+          } else {
+            lists.splice(listIndex, 1);
+            console.log(lists);
+          }
           return;
-        } else {
-          lists.splice(listIndex, 1);
-          console.log(lists);
-          return;
+        } else if (cardToDelete.classList.contains('taskCard')) {
+          let findTask = lists[0].tasks.find(
+            (task) => task.title === title.trim()
+          );
+          console.log(findTask);
+          let taskindex = lists[0].tasks.indexOf(findTask);
+
+          lists[0].tasks.splice(taskindex, 1);
+          console.log(lists[0].tasks);
         }
-
-        // let correctTask = lista.find((item) => item.title === title);
-        // let taskIndex = lista.indexOf(correctTask);
-        // console.log(taskIndex);
-
-        console.log(typeof lists[0].tasks);
-        let findTask = lists[0].tasks.find(
-          (task) => task.title === title.trim()
-        );
-        console.log(findTask);
-        let taskindex = lists[0].tasks.indexOf(findTask);
-
-        lists[0].tasks.splice(taskindex, 1);
-        console.log(lists[0].tasks);
       });
     });
   }
