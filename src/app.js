@@ -76,8 +76,8 @@ const datum = document.querySelector('#duedate');
 
 function init() {
   controller.startCreatingList();
-  controller.startCreatingTask();
   controller.addList();
+  controller.startCreatingTask();
   controller.addTask();
   // controller.doTask('taskContainer');
   // view.deleteTask();

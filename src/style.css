@@ -40,8 +40,8 @@ body {
 .maincontainer {
   flex: 1;
   padding: 2rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr);
   gap: 2rem;
 }
 .sectionName {

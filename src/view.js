@@ -78,6 +78,8 @@ class View {
     listContainer.appendChild(card);
     let taskcontainer = document.createElement('div');
     taskcontainer.classList = `taskContainer ${list.title.replaceAll(' ', '')}`;
+    taskcontainer.innerHTML = `<button class="createTaskModal">ADD TASK</button>
+    `;
     mainContainer.appendChild(taskcontainer);
   }
 
