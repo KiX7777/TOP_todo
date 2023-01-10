@@ -122,42 +122,47 @@ class View {
   }
 
   removeCard(container, lists) {
-    let buttonCont = document.querySelector(`.${container}`);
-    buttonCont.querySelectorAll('.deleteCardbtn').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopImmediatePropagation();
-        let card = e.target.parentNode;
-        console.log(card.parentElement);
+    let buttonCont = document.querySelectorAll(`.${container}`);
+    buttonCont.forEach((container) => {
+      container.querySelectorAll('.deleteCardbtn').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopImmediatePropagation();
+          let card = e.target.parentNode;
 
-        card.closest('.card').remove();
+          card.closest('.card').remove();
 
-        let cardToDelete = e.target.parentNode.closest('.card');
-        let title = cardToDelete.querySelector('.title').textContent;
-        let containertoDelete = document.querySelector(`.${title}`);
-        containertoDelete.remove();
-        //LOGIKA -- UVJET ZA BRISANJE LISTE
-        // debugger;
-        console.log(cardToDelete.classList);
-        if (cardToDelete.classList.contains('listCard')) {
-          let correctList = lists.find((item) => item.title === title.trim());
-          let listIndex = lists.indexOf(correctList);
-          if (listIndex === -1) {
+          let cardToDelete = e.target.parentNode.closest('.card');
+          let title = cardToDelete.querySelector('.title').textContent;
+          let containertoDelete = document.querySelector(`.${title}`);
+          //LOGIKA -- UVJET ZA BRISANJE LISTE
+          // debugger;
+          if (cardToDelete.classList.contains('listCard')) {
+            let correctList = lists.find((item) => item.title === title.trim());
+            let listIndex = lists.indexOf(correctList);
+            if (listIndex === -1) {
+              return;
+            } else {
+              lists.splice(listIndex, 1);
+
+              containertoDelete.remove();
+              console.log(lists);
+            }
             return;
-          } else {
-            lists.splice(listIndex, 1);
-            console.log(lists);
-          }
-          return;
-        } else if (cardToDelete.classList.contains('taskCard')) {
-          let findTask = lists[0].tasks.find(
-            (task) => task.title === title.trim()
-          );
-          console.log(findTask);
-          let taskindex = lists[0].tasks.indexOf(findTask);
+          } else if (cardToDelete.classList.contains('taskCard')) {
+            let imeListe = cardToDelete.dataset.listId;
+            console.log(imeListe);
+            let selectedList = lists.find((item) => item.title === imeListe);
+            let listIndex = lists.indexOf(selectedList);
+            let findTask = lists[listIndex].tasks.find(
+              (task) => task.title === title.trim()
+            );
+            let taskindex = lists[listIndex].tasks.indexOf(findTask);
+            console.log(findTask, taskindex);
 
-          lists[0].tasks.splice(taskindex, 1);
-          console.log(lists[0].tasks);
-        }
+            lists[listIndex].tasks.splice(taskindex, 1);
+            console.log(lists[listIndex].tasks);
+          }
+        });
       });
     });
   }
@@ -174,6 +179,7 @@ class View {
     } else {
       card.classList = 'taskCard card';
     }
+    card.dataset.listId = task.list;
     let shortDate = task.dueDate.slice(0, 13);
 
     card.innerHTML = `

@@ -109,6 +109,7 @@ export class Controller {
         view.resetForm('popupmodal');
         view.createTaskCard(todo);
         view.showSuccessMsg();
+
         view.removeCard('taskContainer', lists);
         view.doTask('taskContainer', lists);
         setTimeout(view.hideSuccessMsg, 2000);

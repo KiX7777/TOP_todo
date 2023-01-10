@@ -128,7 +128,7 @@ body {
 
 .taskCard {
   width: 20rem;
-  height: 20rem;
+  height: auto;
   background-color: rgb(218, 144, 218);
   padding: 1rem;
   display: flex;
@@ -136,7 +136,7 @@ body {
   box-shadow: 0 2px 7px -2px black;
   border-radius: 1rem;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
   transition: 0.3s all;
 }
 
