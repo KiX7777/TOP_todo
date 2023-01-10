@@ -77,6 +77,8 @@ export class Controller {
         // view.removeListCard();
         view.removeCard('listsContainer', lists);
         this.startCreatingTask();
+        this.addTask();
+        view.toggleTaskLists();
       }
     });
   }
@@ -87,36 +89,47 @@ export class Controller {
     });
   }
   startCreatingTask() {
-    const createTaskModal = document.querySelectorAll('.createTaskModal');
-
-    createTaskModal.forEach((button) => {
-      button.addEventListener('click', () => {
-        view.createTaskPopup();
-      });
-    });
+    // const createTaskModal = document.querySelectorAll('.createTaskModal');
+    // createTaskModal.forEach((button) => {
+    //   button.addEventListener('click', () => {
+    //     view.createTaskPopup();
+    //   });
+    // });
   }
 
   addTask() {
-    confirmTaskCreation.addEventListener('click', (e) => {
-      e.preventDefault();
-      let kojaLista = prompt('U koju listu želite dodati zadatak');
-      let listIndex = lists.find((item) => item.title === kojaLista);
-      if (!listIndex || listIndex === null) alert('THAT LIST DOES NOT EXIST');
-      else {
-        let index = lists.indexOf(listIndex);
+    const createTaskModal = document.querySelectorAll('.createTaskModal');
 
-        const todo = this.createTask(kojaLista);
-        if (todo === undefined) return;
-        else lists[index].tasks.push(todo);
-        console.log(lists[index].tasks);
-        view.hideTaskPopup();
-        view.resetForm('popupmodal');
-        view.createTaskCard(todo);
-        view.showSuccessMsg();
-        view.removeCard('taskContainer', lists);
-        view.doTask('taskContainer', lists);
-        setTimeout(view.hideSuccessMsg, 2000);
-      }
+    createTaskModal.forEach((button) => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        view.createTaskPopup();
+
+        confirmTaskCreation.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+
+          let aktivancont = document.querySelector('.active');
+          let idAktivnog = aktivancont.dataset.id;
+          console.log(idAktivnog);
+          let lista = lists.find((item) => item.title === idAktivnog);
+          let index = lists.indexOf(lista);
+
+          const todo = this.createTask(idAktivnog);
+          if (todo === undefined) return;
+          else lists[index].tasks.push(todo);
+          console.log(lists[index].tasks);
+          view.hideTaskPopup();
+          view.resetForm('popupmodal');
+          view.createTaskCard(todo);
+          view.showSuccessMsg();
+          view.removeCard('taskContainer', lists);
+          view.doTask('taskContainer', lists);
+          setTimeout(view.hideSuccessMsg, 2000);
+        });
+      });
     });
   }
 

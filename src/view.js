@@ -75,14 +75,30 @@ class View {
       d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
     />
   </svg>`;
+
+    //IF THERE IS A CONTAINER, HIDE PREVIOUS ONES AND DISPLAY THE NEW ONE
+    if (document.querySelector('.taskContainer')) {
+      document.querySelectorAll('.taskContainer').forEach((container) => {
+        container.style.display = 'none';
+        container.classList.remove('active');
+      });
+    }
+
     listContainer.appendChild(card);
+    // mainContainer.innerHTML = '';
     let taskcontainer = document.createElement('div');
-    taskcontainer.classList = `taskContainer ${list.title.replaceAll(' ', '')}`;
+    taskcontainer.classList = `taskContainer ${list.title.replaceAll(
+      ' ',
+      ''
+    )} active`;
     taskcontainer.innerHTML = `<button class="createTaskModal">ADD TASK</button>
+                                <h1 >${list.title}</h1>                       
     `;
+
     let addTaskBtn = document.createElement('button');
     addTaskBtn.className = 'createTaskModal';
     addTaskBtn.textContent = 'TASK';
+    taskcontainer.dataset.id = list.title;
     mainContainer.appendChild(taskcontainer, addTaskBtn);
   }
 
@@ -177,11 +193,9 @@ class View {
 
   createTaskCard(task) {
     let card = document.createElement('div');
-    console.log(task.list);
     const taskContainer = document.querySelector(
       `.${task.list.replaceAll(' ', '')}`
     );
-    console.log(taskContainer);
     if (task.priority === 'important') {
       card.classList = 'taskCard card importantCard';
     } else {
@@ -230,11 +244,25 @@ class View {
     taskContainer.appendChild(card);
   }
 
-  deleteTask() {
-    const deleteTaskBtn = document.querySelector('.obrišiTask');
-    deleteTaskBtn.addEventListener('click', () => {
-      controller.deleteTask();
-    });
+  toggleTaskLists() {
+    let list = document.querySelectorAll('.listCard');
+    list.forEach((card) =>
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        let naziv = e.target.querySelector('.title').textContent;
+        let container = document.querySelector(`.taskContainer.${naziv}`);
+
+        document.querySelectorAll('.taskContainer').forEach((container) => {
+          container.style.display = 'none';
+          container.classList.remove('active');
+        });
+
+        console.log(container);
+        container.style.display = 'flex';
+        container.classList.add('active');
+      })
+    );
   }
 }
 

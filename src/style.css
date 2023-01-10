@@ -72,6 +72,7 @@ body {
   color: white;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
 }
 
 .cardBtns {
@@ -117,7 +118,6 @@ body {
 }
 
 .taskContainer {
-  border-top: 1px solid black;
   background-color: lightblue;
   flex: 1;
   display: flex;
@@ -311,6 +311,8 @@ p.taskCardinfo {
   left: 1rem;
   z-index: 999;
 }
-.createTaskModal button {
-  background-color: red !important;
+
+.taskContainer h1 {
+  position: absolute;
+  top: 0;
 }
