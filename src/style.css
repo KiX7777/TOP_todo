@@ -40,10 +40,11 @@ body {
 .maincontainer {
   flex: 1;
   padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 1fr);
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, 1fr); */
   gap: 2rem;
 }
+
 .sectionName {
   font-size: 2.4rem;
 }
@@ -104,7 +105,7 @@ body {
   width: fit-content;
   padding: 1rem;
   align-self: center;
-  background-color: transparent;
+  /* background-color: transparent; */
   border-radius: 0.5rem;
   border: 1px solid black;
   cursor: pointer;
@@ -119,16 +120,21 @@ body {
   border-top: 1px solid black;
   background-color: lightblue;
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, 20rem);
+  display: flex;
+  /* grid-template-columns: repeat(auto-fit, 20rem); */
+  /* grid-template-columns: fit-content fit-content; */
   gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
   overflow: auto;
+  position: relative;
 }
 
 .taskCard {
   width: 20rem;
-  height: auto;
+  height: 24rem;
   background-color: rgb(218, 144, 218);
   padding: 1rem;
   display: flex;
@@ -149,6 +155,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  text-align: justify;
 }
 
 .listCard::first-letter {
@@ -165,6 +172,14 @@ body {
   border-radius: 1rem;
 
   background-color: rgb(103, 158, 192);
+}
+
+.taskCardinfo::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.taskCardinfo:last-of-type:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.111);
 }
 
 .popupmodal,
@@ -273,8 +288,29 @@ input[type='date']:before {
 }
 .taskCardinfo {
   font-size: 1.4rem;
+  overflow: auto;
+  white-space: pre-wrap;
+}
+p.taskCardinfo {
 }
 
 .taskCardinfo.title {
   font-size: 1.8rem;
+}
+
+.taskCardinfo:last-of-type {
+  height: 10rem;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  align-items: initial;
+}
+
+.createTaskModal {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 999;
+}
+.createTaskModal button {
+  background-color: red !important;
 }

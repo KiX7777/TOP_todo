@@ -80,7 +80,10 @@ class View {
     taskcontainer.classList = `taskContainer ${list.title.replaceAll(' ', '')}`;
     taskcontainer.innerHTML = `<button class="createTaskModal">ADD TASK</button>
     `;
-    mainContainer.appendChild(taskcontainer);
+    let addTaskBtn = document.createElement('button');
+    addTaskBtn.className = 'createTaskModal';
+    addTaskBtn.textContent = 'TASK';
+    mainContainer.appendChild(taskcontainer, addTaskBtn);
   }
 
   removeListCard() {

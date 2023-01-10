@@ -5,7 +5,6 @@ import { List } from './app.js';
 import view from './view.js';
 import { lists } from './app.js';
 
-const createTaskModal = document.querySelector('.createTaskModal');
 const createListModal = document.querySelector('.createListModal');
 const confirmTaskCreation = document.querySelector('.addTask');
 const confirmListCreation = document.querySelector('.addList');
@@ -77,6 +76,7 @@ export class Controller {
         view.resetForm('listModal');
         // view.removeListCard();
         view.removeCard('listsContainer', lists);
+        this.startCreatingTask();
       }
     });
   }
@@ -87,8 +87,12 @@ export class Controller {
     });
   }
   startCreatingTask() {
-    createTaskModal.addEventListener('click', () => {
-      view.createTaskPopup();
+    const createTaskModal = document.querySelectorAll('.createTaskModal');
+
+    createTaskModal.forEach((button) => {
+      button.addEventListener('click', () => {
+        view.createTaskPopup();
+      });
     });
   }
 
