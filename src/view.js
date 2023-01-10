@@ -133,7 +133,8 @@ class View {
 
         let cardToDelete = e.target.parentNode.closest('.card');
         let title = cardToDelete.querySelector('.title').textContent;
-
+        let containertoDelete = document.querySelector(`.${title}`);
+        containertoDelete.remove();
         //LOGIKA -- UVJET ZA BRISANJE LISTE
         // debugger;
         console.log(cardToDelete.classList);
