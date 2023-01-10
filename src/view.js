@@ -13,7 +13,6 @@ const priority = document.querySelector('#priority2');
 
 const date = new Date();
 const today = date.toISOString().split('T')[0];
-console.log(today);
 
 class View {
   createListPopup() {
@@ -258,7 +257,6 @@ class View {
           container.classList.remove('active');
         });
 
-        console.log(container);
         container.style.display = 'flex';
         container.classList.add('active');
       })

@@ -113,7 +113,6 @@ export class Controller {
 
           let aktivancont = document.querySelector('.active');
           let idAktivnog = aktivancont.dataset.id;
-          console.log(idAktivnog);
           let lista = lists.find((item) => item.title === idAktivnog);
           let index = lists.indexOf(lista);
 

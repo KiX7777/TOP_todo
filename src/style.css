@@ -291,8 +291,6 @@ input[type='date']:before {
   overflow: auto;
   white-space: pre-wrap;
 }
-p.taskCardinfo {
-}
 
 .taskCardinfo.title {
   font-size: 1.8rem;
