@@ -165,8 +165,13 @@ class View {
           let card = e.target.parentNode;
 
           let cardToDelete = e.target.parentNode.closest('.card');
+          console.log(cardToDelete);
 
-          cardToDelete.closest('.card').remove();
+          cardToDelete.closest('.card').classList.add('fade-out');
+          btn.addEventListener('transitionend', () => {
+            cardToDelete.closest('.card').remove();
+          });
+
           let title = cardToDelete.querySelector('.title').textContent;
           let containertoDelete = document.querySelector(`.${title}`);
           //LOGIKA -- UVJET ZA BRISANJE LISTE
