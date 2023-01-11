@@ -61,8 +61,14 @@ export class Controller {
       });
       return;
     } else {
-      return new List(naziv.trim());
+      if (lists.find((item) => item.title === naziv)) {
+        alert('List with that name already exists! Choose another name.');
+        return;
+      } else {
+        return new List(naziv.trim());
+      }
     }
+
     // const lista = new List(nazivListe);
   }
 
@@ -129,36 +135,12 @@ export class Controller {
           view.hideTaskPopup();
           view.resetForm('popupmodal');
           view.createTaskCard(todo);
-          view.showSuccessMsg();
           view.removeCard('taskContainer', lists);
           view.doTask('taskContainer', lists);
-          setTimeout(view.hideSuccessMsg, 2000);
         });
       });
     });
   }
-
-  deleteTask = () => {
-    let listName = prompt('From which list do you want to delete');
-
-    let selectedList = lists.find((item) => item.title === listName);
-    if (!selectedList || selectedList === null) {
-      alert('THAT LIST DOES NOT EXIST');
-      return;
-    } else {
-      let taskname = prompt('What task do you want to delete');
-      let listIndex = lists.indexOf(selectedList);
-      const delTask = lists[listIndex].tasks.find(
-        (item) => item.title === taskname
-      );
-      if (!delTask || delTask === null) alert('THAT TASK DOES NOT EXIST');
-      else {
-        let taskindex = lists[listIndex].tasks.indexOf(delTask);
-        lists[listIndex].tasks.splice(taskindex, 1);
-        console.log(lists[listIndex].tasks);
-      }
-    }
-  };
 }
 
 export default new Controller();

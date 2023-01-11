@@ -17,12 +17,15 @@ const today = date.toISOString().split('T')[0];
 class View {
   createListPopup() {
     overlay.style.display = 'block';
+    listPopup.classList.toggle('scale-in-center');
     listPopup.style.display = 'block';
     document.querySelector('.listName').focus();
   }
 
   hideListPopup() {
     overlay.style.display = 'none';
+    listPopup.classList.toggle('scale-in-center');
+
     listPopup.style.display = 'none';
   }
 
@@ -55,8 +58,8 @@ class View {
       form.value = '';
       dateInput.value = today;
       priority.value = '';
-      listcolor = '#f1f3f5';
     });
+    listcolor = '#f1f3f5';
   }
 
   createListCard(list) {
@@ -161,9 +164,9 @@ class View {
           e.stopImmediatePropagation();
           let card = e.target.parentNode;
 
-          card.closest('.card').remove();
-
           let cardToDelete = e.target.parentNode.closest('.card');
+
+          cardToDelete.closest('.card').remove();
           let title = cardToDelete.querySelector('.title').textContent;
           let containertoDelete = document.querySelector(`.${title}`);
           //LOGIKA -- UVJET ZA BRISANJE LISTE
@@ -258,16 +261,32 @@ class View {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        let naziv = e.target.querySelector('.title').textContent;
-        let container = document.querySelector(`.taskContainer.${naziv}`);
+        console.log(e.target.textContent);
+        let naziv;
+        if (e.target.className === 'title') {
+          naziv = e.target.textContent;
+          let container = document.querySelector(`.taskContainer.${naziv}`);
 
-        document.querySelectorAll('.taskContainer').forEach((container) => {
-          container.style.display = 'none';
-          container.classList.remove('active');
-        });
+          document.querySelectorAll('.taskContainer').forEach((container) => {
+            container.style.display = 'none';
+            container.classList.remove('active');
+          });
 
-        container.style.display = 'flex';
-        container.classList.add('active');
+          container.style.display = 'flex';
+          container.classList.add('active');
+        } else {
+          naziv = e.target.querySelector('.title').textContent;
+
+          let container = document.querySelector(`.taskContainer.${naziv}`);
+
+          document.querySelectorAll('.taskContainer').forEach((container) => {
+            container.style.display = 'none';
+            container.classList.remove('active');
+          });
+
+          container.style.display = 'flex';
+          container.classList.add('active');
+        }
       })
     );
   }
