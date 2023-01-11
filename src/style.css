@@ -20,7 +20,8 @@ body {
   display: flex;
 }
 .sidebar {
-  background-color: lightskyblue;
+  background-color: #001d3d;
+  color: white;
   width: clamp(15rem, 20rem, 20%);
   display: flex;
   flex-direction: column;
@@ -42,6 +43,7 @@ body {
   display: flex;
   /* grid-template-columns: repeat(auto-fit, 1fr); */
   gap: 2rem;
+  transition: 0.3s all;
 }
 
 .sectionName {
@@ -63,19 +65,22 @@ body {
   min-height: 4rem;
   max-height: 25%;
   /* flex-grow: 1; */
-  background-color: grey;
+  background-color: #003566;
   border-radius: 0.5rem;
   padding: 1rem;
-  border: 1px solid black;
+  /* border: 1px solid white; */
   font-size: 1.2rem;
   color: white;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  transition: 0.3s background-color;
   animation: fadein 0.5s ease 0s 1 normal forwards;
   /* overflow: auto; */
 }
-
+.listCard:hover {
+  background-color: #1a4975;
+}
 .cardBtns {
   display: flex;
   align-items: center;
@@ -103,10 +108,11 @@ body {
 }
 .deleteCardbtn:hover {
   color: red;
+  transform: scale(1.1);
 }
 
 .finishCardBtn:hover {
-  color: rgb(4, 199, 4);
+  transform: scale(1.1);
 }
 
 .maincontainer button {
@@ -115,7 +121,7 @@ body {
   align-self: center;
   /* background-color: transparent; */
   border-radius: 0.5rem;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   cursor: pointer;
 }
 
@@ -136,12 +142,14 @@ body {
   padding: 2rem;
   overflow: auto;
   position: relative;
+  transition: 0.3s all;
+  animation: switchlist 0.5s ease-in-out 0s 1 normal forwards;
 }
 
 .taskCard {
   width: 20rem;
   height: 24rem;
-  background-color: rgb(218, 144, 218);
+  background-color: #00b4d8;
   padding: 1rem;
   display: flex;
   border: 0.5px solid white;
@@ -154,7 +162,7 @@ body {
 }
 
 .importantCard {
-  background-color: rgb(219, 219, 3);
+  background-color: #ffd60a;
 }
 
 .taskCardinfo {
@@ -192,9 +200,9 @@ body {
 .popupmodal,
 .listModal {
   width: 20%;
-  background-color: aquamarine;
-  border: 3px solid white;
-  border-radius: 0.5rem;
+  background-color: #001d3d;
+  /* border: 3px solid white; */
+  border-radius: 1rem;
   padding: 1rem 0.5rem;
   position: fixed;
   top: 50%;
@@ -239,6 +247,13 @@ body {
   padding: 2rem;
 }
 
+.popupmodal input {
+  color: white;
+}
+.form input {
+  color: white;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -257,7 +272,8 @@ body {
 .form input,
 .popupmodal select {
   background-color: transparent;
-  border: 1px solid black;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.325);
   border-radius: 0.5rem;
   padding: 0.4rem;
   position: relative;
@@ -271,6 +287,14 @@ input:invalid {
 
 .popupmodal {
   /* position: relative; */
+}
+.listModal {
+  border: 1px solid black;
+}
+
+.listModal input {
+  color: white;
+  border: 1px solid white;
 }
 
 .popupmodal::after {
@@ -292,10 +316,14 @@ input:invalid {
 }
 .form input::placeholder {
   font-size: 1.2rem;
-  color: grey;
+  color: rgb(180, 180, 180);
 }
+
+/* .form */
 .popupmodal select {
-  color: grey;
+  color: rgb(180, 180, 180);
+
+  background-color: #001d3d;
 }
 
 input[type='date'] {
@@ -339,10 +367,15 @@ input:focus {
   padding: 1rem;
   align-self: center;
   background-color: transparent;
-  border: 1px solid black;
+  color: white;
+  border: 1px solid white;
   border-radius: 0.5rem;
   transition: 0.4s all;
   cursor: pointer;
+}
+
+.listName::placeholder {
+  color: white;
 }
 
 .addTask:hover {
@@ -370,11 +403,26 @@ input:focus {
   width: 3rem;
 }
 
+.createListModal {
+  cursor: pointer;
+  width: 3rem;
+  transition: 0.3s all;
+}
+.createListModal:hover {
+  fill: #003566;
+}
+
 .createTaskModal {
   position: absolute;
   top: 1rem;
   left: 1rem;
   z-index: 999;
+  transition: 0.3s all;
+}
+
+.createTaskModal:hover {
+  fill: #003566;
+  color: white;
 }
 
 .taskContainer h1 {
@@ -387,6 +435,15 @@ input:focus {
   animation: fade-out 0.3s ease-out both;
 }
 
+@keyframes switchlist {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
 /**
  * ----------------------------------------
  * animation fade-out
@@ -421,13 +478,25 @@ input:focus {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 1200px) {
+  .popupmodal {
+    width: 30%;
+  }
+}
+@media (max-width: 750px) {
+  .popupmodal {
+    width: 50%;
+  }
+}
+
+@media (max-width: 450px) {
   html {
     font-size: 80%;
   }
   .popupmodal {
     width: 90%;
   }
+
   h1 {
     right: 5px;
   }

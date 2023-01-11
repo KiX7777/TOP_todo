@@ -152,7 +152,7 @@ class View {
 
           check.style.fill = 'green';
           check.style.color = 'white';
-          card.style.backgroundColor = 'lightgreen';
+          card.style.backgroundColor = '#06d6a0';
         });
       });
     });
@@ -270,7 +270,7 @@ class View {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        console.log(e.target.textContent);
+        console.log(e.target.textContent.trim());
         let naziv;
         if (e.target.className === 'title') {
           naziv = e.target.textContent;
@@ -291,6 +291,7 @@ class View {
           document.querySelectorAll('.taskContainer').forEach((container) => {
             container.style.display = 'none';
             container.classList.remove('active');
+            container.classList.add('.swing-top-fwd');
           });
 
           container.style.display = 'flex';
