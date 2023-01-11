@@ -44,6 +44,8 @@
               name="title"
               id="title"
               placeholder="Task name"
+              minlength="1"
+              required
             /><input
               type="text"
               name="description"
@@ -67,7 +69,7 @@
               <option value="important">Important</option>
             </select>
             <input type="text" name="notes" id="notes" placeholder="Notes" />
-            <button class="addTask">ADD</button>
+            <button type="submit" class="addTask">ADD</button>
           </form>
         </div>
         <div class="listModal">
@@ -76,9 +78,15 @@
               type="text"
               name="listName"
               id="listName"
+              class="listName"
               placeholder="List name"
+              required
+              minlength="1"
+              data-ok="invalid"
             />
-            <button class="addList">ADD</button>
+            <small class="invalidListMsg">Please insert valid list name</small>
+            <input type="color" name="color" id="color" value="#f1f3f5" />
+            <button type="submit" class="addList">ADD</button>
           </form>
         </div>
         <div class="success">TASK ADDEDD SUCCESSFULLY</div>

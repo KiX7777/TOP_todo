@@ -18,6 +18,7 @@ class View {
   createListPopup() {
     overlay.style.display = 'block';
     listPopup.style.display = 'block';
+    document.querySelector('.listName').focus();
   }
 
   hideListPopup() {
@@ -29,6 +30,7 @@ class View {
     overlay.style.display = 'block';
     taskPopup.style.display = 'block';
     dateInput.setAttribute('value', today);
+    title.focus();
   }
 
   hideTaskPopup() {
@@ -47,10 +49,13 @@ class View {
 
   resetForm(container) {
     let forms = document.querySelector(`.${container}`);
-    forms.querySelectorAll('input').forEach((form) => {
+    let listcolor = document.querySelector('#color').value;
+
+    forms.querySelectorAll('input[type=text]').forEach((form) => {
       form.value = '';
       dateInput.value = today;
       priority.value = '';
+      listcolor = '#f1f3f5';
     });
   }
 
@@ -98,6 +103,10 @@ class View {
     addTaskBtn.className = 'createTaskModal';
     addTaskBtn.textContent = 'TASK';
     taskcontainer.dataset.id = list.title;
+
+    let listcolor = document.querySelector('#color').value;
+
+    taskcontainer.style.backgroundColor = listcolor;
     mainContainer.appendChild(taskcontainer, addTaskBtn);
   }
 

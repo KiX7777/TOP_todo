@@ -24,18 +24,16 @@ const deleteCardbtn = document.querySelector('.deleteCardbtn');
 
 export class Controller {
   createTask = (list) => {
-    let taskTitle = title.value;
+    let taskTitle = title.value.trim();
     if (!taskTitle || !taskTitle.trim().length === 0) {
-      alert('TITLE IS MANDATORY');
+      alert('Task name cannot be empty!');
       return;
     } else {
       let taskDescription = description.value;
       let taskdueDate = duedate.value;
-      if (!taskdueDate || !taskdueDate.trim().length === 0) {
-        alert('DATE IS MANDATORY');
-        return;
-      } else {
-        let taskPriority = priority2.value;
+
+      let taskPriority = priority2.value;
+      if (taskPriority === 'normal' || taskPriority === 'important') {
         let taskNotes = notes.value;
         return new Task(
           taskTitle,
@@ -45,17 +43,25 @@ export class Controller {
           taskNotes,
           list
         );
+      } else {
+        alert('Select priority');
+        return;
       }
     }
   };
 
   createList() {
     let naziv = listName.value;
+    let msg = document.querySelector('.invalidListMsg');
     if (!naziv || naziv.trim().length === 0) {
-      alert('INSERT CORRECT LIST NAME');
-      naziv = prompt('Naziv liste');
+      msg.style.display = 'inline-block';
+      // alert('INSERT CORRECT LIST NAME');
+      listName.addEventListener('input', () => {
+        msg.style.display = 'none';
+      });
+      return;
     } else {
-      return new List(naziv);
+      return new List(naziv.trim());
     }
     // const lista = new List(nazivListe);
   }

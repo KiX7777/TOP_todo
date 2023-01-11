@@ -216,6 +216,11 @@ body {
 .listModal {
   display: none;
 }
+.listModal {
+  /* display: block; */
+  width: fit-content;
+  padding: 2rem;
+}
 
 .form {
   display: flex;
@@ -223,14 +228,51 @@ body {
   gap: 1rem;
   justify-content: center;
 }
+
+.listModal form {
+  align-items: center;
+}
+
+.listModal input[type='color'] {
+  border: none;
+}
+
 .form input,
 .popupmodal select {
   background-color: transparent;
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 0.4rem;
+  position: relative;
+}
+.form input[data-ok='invalid'] {
+  position: relative;
+}
+input:invalid {
+  border: 1px solid red;
 }
 
+.popupmodal {
+  /* position: relative; */
+}
+
+.popupmodal::after {
+  content: 'Title is required';
+  position: absolute;
+  top: 0;
+  right: 5%;
+  color: red;
+  display: block;
+}
+
+.invalidListMsg {
+  color: red;
+  font-size: 1.1rem;
+  font-weight: bold;
+  position: absolute;
+  top: 30%;
+  display: none;
+}
 .form input::placeholder {
   font-size: 1.2rem;
   color: grey;
