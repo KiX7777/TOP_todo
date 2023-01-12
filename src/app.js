@@ -10,7 +10,8 @@ export class List {
   }
 }
 
-const basicTodos = new List('Basic');
+const basicTodos = new List('Default');
+lists.push(basicTodos);
 
 export class Task {
   constructor(title, description, dueDate, priority, notes, list) {
@@ -78,9 +79,16 @@ function init() {
   controller.startCreatingList();
   controller.addList();
   // controller.startCreatingTask();
-  controller.addTask();
+  // controller.addTask();
+  // controller.editTask();
   // controller.doTask('taskContainer');
   // view.deleteTask();
 }
 
 init();
+
+// controller.waitForElm('.taskCard').then((elm) => {
+//   console.log('Element is ready');
+//   console.log(elm.textContent);
+//   view.editTask('taskContainer', lists);
+// });

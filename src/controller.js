@@ -137,6 +137,8 @@ export class Controller {
           view.createTaskCard(todo);
           view.removeCard('taskContainer', lists);
           view.doTask('taskContainer', lists);
+          view.editTask('taskCard', lists);
+          view.resetForm('editmodal');
         });
       });
     });

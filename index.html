@@ -106,6 +106,37 @@
             <button type="submit" class="addList">ADD</button>
           </form>
         </div>
+        <div class="editmodal">
+          <form class="form" action="">
+            <input
+              type="text"
+              name="title"
+              id="editTitle"
+              placeholder="Task name"
+              minlength="1"
+              required
+            /><input
+              type="text"
+              name="description"
+              id="editDescription"
+              placeholder="Description"
+            /><input
+              type="date"
+              name="duedate"
+              id="editDueDate"
+              value="2018-07-22"
+              placeholder="date"
+            />
+
+            <input
+              type="text"
+              name="notes"
+              id="editNotes"
+              placeholder="Notes"
+            />
+            <button type="submit" class="editTask">SAVE CHANGES</button>
+          </form>
+        </div>
         <div class="success">TASK ADDEDD SUCCESSFULLY</div>
         <div class="overlay"></div>
       </div>

@@ -4,6 +4,7 @@ import controller from './controller.js';
 const overlay = document.querySelector('.overlay');
 const taskPopup = document.querySelector('.popupmodal');
 const listPopup = document.querySelector('.listModal');
+const editPopup = document.querySelector('.editmodal');
 const successMsg = document.querySelector('.success');
 const listContainer = document.querySelector('.listsContainer');
 const taskContainer = document.querySelector('.taskContainer');
@@ -35,10 +36,19 @@ class View {
     dateInput.setAttribute('value', today);
     title.focus();
   }
+  createEditPopup() {
+    overlay.style.display = 'block';
+    editPopup.style.display = 'block';
+    dateInput.setAttribute('value', today);
+  }
 
   hideTaskPopup() {
     overlay.style.display = 'none';
     taskPopup.style.display = 'none';
+  }
+  hideEditPopup() {
+    overlay.style.display = 'none';
+    editPopup.style.display = 'none';
   }
 
   showSuccessMsg() {
@@ -235,10 +245,11 @@ class View {
       `
         : ''
     }</p>
-                      <p class="taskCardinfo">${task.description}</p>
-                      <p class="taskCardinfo"><strong>Due date: </strong>${shortDate}</p>
-                      <p class="taskCardinfo"></p>
-                      <p class="taskCardinfo">${task.notes}</p>
+                      <p class="taskCardinfo description">${
+                        task.description
+                      }</p>
+                      <p class="taskCardinfo duedate"><strong>Due date: </strong>${shortDate}</p>
+                      <p class="taskCardinfo notes">${task.notes}</p>
 
                       <div class="cardBtns ">
                         <svg
@@ -258,6 +269,20 @@ class View {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 finishCardBtn checkBtn">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
+                        <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-6 h-6 editCardBtn"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                        />
+                      </svg>
                       </div>
 `;
 
@@ -299,6 +324,65 @@ class View {
         }
       })
     );
+  }
+
+  editTask(task, lists) {
+    const cont = document.querySelectorAll(`.${task}`);
+    cont.forEach((taskCard) => {
+      const savebtn = document.querySelector('.editTask');
+      taskCard.querySelectorAll('.editCardBtn').forEach((button) => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          let card = e.target.parentNode.closest('.card');
+          let taskname = card.querySelector('.title');
+          let taskdesc = card.querySelector('.description');
+          let tasknotes = card.querySelector('.notes');
+          let taskdate = card.querySelector('.duedate');
+          let formtitle = document.getElementById('editTitle');
+          let formdesc = document.getElementById('editDescription');
+          let formnotes = document.getElementById('editNotes');
+          let formdate = document.getElementById('editDueDate');
+
+          // let date = new Date(taskdate).toISOString();
+          // console.log(date);
+          console.log(taskname, card);
+          formtitle.value = taskname.textContent.trim();
+          formdesc.value = taskdesc.textContent;
+          formnotes.value = tasknotes.textContent;
+          formdate.value = today;
+          this.createEditPopup();
+          savebtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            let imeListe = card.dataset.listId;
+            let selectedList = lists.find((item) => item.title === imeListe);
+            let listIndex = lists.indexOf(selectedList);
+
+            const editTask = lists[listIndex].tasks.find(
+              (item) => item.title === taskname.textContent.trim()
+            );
+
+            let taskindex = lists[listIndex].tasks.indexOf(editTask);
+            let tasktoEdit = lists[listIndex].tasks[taskindex];
+            console.log(tasktoEdit);
+            tasktoEdit['title'] = formtitle.value;
+            tasktoEdit['description'] = formdesc.value;
+            tasktoEdit['notes'] = formnotes.value;
+            tasktoEdit['dueDate'] = formdate.value;
+            console.log(tasktoEdit);
+            taskname.textContent = formtitle.value;
+            taskdesc.textContent = formdesc.value;
+            tasknotes.textContent = formnotes.value;
+            let date = new Date(formdate.value);
+            let shortDate = date.toLocaleDateString();
+            taskdate.textContent = shortDate;
+            this.hideEditPopup();
+          });
+
+          // this.hideEditPopup();
+        });
+      });
+    });
   }
 }
 
