@@ -80,7 +80,6 @@ export class Controller {
       const novaLista = this.createList();
       if (typeof novaLista !== 'object') return;
       else {
-        console.log(typeof novaLista);
         lists.push(novaLista);
         console.log(lists);
         view.hideListPopup();

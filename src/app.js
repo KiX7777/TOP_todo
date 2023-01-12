@@ -11,7 +11,7 @@ export class List {
 }
 
 const basicTodos = new List('Default');
-lists.push(basicTodos);
+// lists.push(basicTodos);
 
 export class Task {
   constructor(title, description, dueDate, priority, notes, list) {

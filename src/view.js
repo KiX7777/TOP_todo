@@ -69,7 +69,20 @@ class View {
       dateInput.value = today;
       priority.value = '';
     });
-    listcolor = '#f1f3f5';
+
+    // Check to see if Media-Queries are supported
+
+    // Check if the dark-mode Media-Query matches
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      listcolor = '#003566';
+      console.log('dark');
+      // Dark
+    } else {
+      listcolor = '#f1f3f5';
+      console.log('dark');
+
+      // Light
+    }
   }
 
   createListCard(list) {
@@ -162,6 +175,8 @@ class View {
 
           check.style.fill = 'green';
           check.style.color = 'white';
+          card.style.background = 'none';
+          card.dataset.finished = '';
           card.style.backgroundColor = '#06d6a0';
         });
       });
