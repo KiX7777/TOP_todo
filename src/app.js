@@ -11,7 +11,7 @@ export class List {
 }
 
 const basicTodos = new List('Default');
-// lists.push(basicTodos);
+lists.push(basicTodos);
 
 export class Task {
   constructor(title, description, dueDate, priority, notes, list) {
@@ -72,12 +72,28 @@ const deleteTaskBtn = document.querySelector('.obrišiTask');
 
 // console.log(brijanje);
 
+function startTask() {
+  const createTaskModal = document.querySelectorAll('.createTaskModal');
+  createTaskModal.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      view.createTaskPopup();
+      controller.addTask();
+    });
+  });
+}
+
 const datum = document.querySelector('#duedate');
 // console.log(datum.value);
 
 function init() {
   controller.startCreatingList();
+  controller.startCreatingTask();
+  controller.addTask();
   controller.addList();
+  startTask();
+
   // controller.startCreatingTask();
   // controller.addTask();
   // controller.editTask();

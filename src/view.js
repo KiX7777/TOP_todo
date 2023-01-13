@@ -200,9 +200,12 @@ class View {
           console.log(cardToDelete);
 
           cardToDelete.closest('.card').classList.add('fade-out');
-          btn.addEventListener('transitionend', () => {
+          setTimeout(() => {
             cardToDelete.closest('.card').remove();
-          });
+          }, 200);
+          // btn.addEventListener('transitionend', () => {
+          //   cardToDelete.closest('.card').remove();
+          // });
 
           let title = cardToDelete.querySelector('.title').textContent;
           let containertoDelete = document.querySelector(`.${title}`);
