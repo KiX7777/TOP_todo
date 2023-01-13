@@ -90,7 +90,7 @@ export class Controller {
         // this.startCreatingTask();
         // this.addTask();
         view.toggleTaskLists();
-        view.toggleSidebar();
+        view.showSidebar();
         const createTaskModal = document.querySelectorAll('.createTaskModal');
         createTaskModal.forEach((button) => {
           button.addEventListener('click', (e) => {

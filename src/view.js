@@ -373,17 +373,18 @@ class View {
     );
   }
 
-  toggleSidebar() {
+  showSidebar() {
     const sidebarBtn = document.querySelectorAll('.sidebarToggle');
 
     sidebarBtn.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        sidebar.style.left = '0';
-
+        // sidebar.style.left = '0';
         let cont = document.querySelector('div.active');
         cont.classList.toggle('moveMain');
+
+        sidebar.style.width = 'clamp(15rem, 20rem, 20%)';
       });
     });
   }

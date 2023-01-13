@@ -39,12 +39,12 @@ body {
 .sidebar {
   background-color: #001d3d;
   color: white;
-  width: clamp(15rem, 20rem, 20%);
-  /* display: none; */
+  width: 0;
+  /* width: clamp(15rem, 20rem, 20%); */
   display: flex;
   position: fixed;
   height: 100%;
-  left: clamp(15rem, 20rem, 20%);
+  /* left: clamp(15rem, 20rem, 20%); */
   flex-direction: column;
   gap: 4rem;
   padding: 1rem;
@@ -626,7 +626,7 @@ input:focus {
   }
 }
 
-/* @keyframes sidebarAnim {
+@keyframes sidebarAnim {
   0% {
     opacity: 0;
     transform: translateX(-250px);
@@ -636,4 +636,4 @@ input:focus {
     opacity: 1;
     transform: translateX(0);
   }
-} */
+}

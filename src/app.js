@@ -88,7 +88,7 @@ const datum = document.querySelector('#duedate');
 // console.log(datum.value);
 
 function init() {
-  view.toggleSidebar();
+  view.showSidebar();
   controller.startCreatingList();
   controller.startCreatingTask();
   controller.addTask();
