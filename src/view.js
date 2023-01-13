@@ -63,7 +63,7 @@ class View {
 
   resetForm(container) {
     let forms = document.querySelector(`.${container}`);
-    let listcolor = document.querySelector('#color').value;
+    // let listcolor = document.querySelector('#color').value;
 
     forms.querySelectorAll('input[type=text]').forEach((form) => {
       form.value = '';
@@ -74,21 +74,12 @@ class View {
     // Check to see if Media-Queries are supported
 
     // Check if the dark-mode Media-Query matches
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      listcolor = '#003566';
-      console.log('dark');
-      // Dark
-    } else {
-      listcolor = '#f1f3f5';
-      console.log('dark');
-
-      // Light
-    }
   }
 
   createListCard(list) {
     let id = 0;
     let card = document.createElement('div');
+    // this.containerColor();
 
     // card.className = 'listCard';
     card.classList = 'card listCard';
@@ -122,6 +113,7 @@ class View {
       ' ',
       ''
     )} active`;
+
     taskcontainer.innerHTML = `
 
     <svg
@@ -162,11 +154,31 @@ class View {
     // addTaskBtn.className = 'createTaskModal';
     // addTaskBtn.textContent = 'TASK';
     taskcontainer.dataset.id = list.title;
+    let findcolor = document.querySelector('.chosencolor');
+    let color = window.getComputedStyle(findcolor).backgroundColor;
+    console.log(color);
 
-    let listcolor = document.querySelector('#color').value;
+    // let listcolor = document.querySelector('#color').value;
 
-    taskcontainer.style.backgroundColor = listcolor;
+    taskcontainer.style.backgroundColor = color;
     mainContainer.appendChild(taskcontainer);
+  }
+
+  containerColor() {
+    let cont = document.querySelector('div.active');
+    let color = document.querySelectorAll('.color');
+    color.forEach((boja) => {
+      boja.addEventListener('click', (e) => {
+        document.querySelectorAll('.color').forEach((col) => {
+          col.classList.remove('chosencolor');
+          col.style.border = '';
+        });
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        boja.classList.add('chosencolor');
+        boja.style.border = '1px solid white';
+      });
+    });
   }
 
   removeListCard() {
@@ -383,7 +395,7 @@ class View {
         // sidebar.style.left = '0';
         let cont = document.querySelector('div.active');
         cont.classList.toggle('moveMain');
-
+        sidebar.style.left = '0';
         sidebar.style.width = 'clamp(15rem, 20rem, 20%)';
       });
     });

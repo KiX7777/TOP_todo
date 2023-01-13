@@ -107,6 +107,7 @@ export class Controller {
   startCreatingList() {
     createListModal.addEventListener('click', () => {
       view.createListPopup();
+      view.containerColor();
     });
   }
   startCreatingTask() {

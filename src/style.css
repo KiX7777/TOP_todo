@@ -13,11 +13,27 @@
     color: white;
   }
   .maincontainer {
-    background-color: #003566;
+    background-color: #343a40;
+  }
+  .taskContainer {
+    background-color: #343a40;
   }
 
   .importantCard {
     color: black;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  .taskContainer {
+    background-color: #f1f3f5;
+  }
+  h1 {
+    color: black;
+  }
+
+  .color[data-color='red'] {
+    background-color: red;
   }
 }
 
@@ -320,8 +336,49 @@ body {
 }
 .listModal {
   /* display: block; */
-  width: fit-content;
-  padding: 2rem;
+  width: 30%;
+  /* padding: 2rem; */
+}
+
+.colors {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+.color {
+  background-color: transparent;
+  padding: 1rem;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+
+.color:hover {
+  transform: scale(1.2);
+  border: 1px solid white;
+}
+
+.color[data-color='red'] {
+  background-color: rgba(143, 4, 4, 0.977);
+}
+.color[data-color='blue'] {
+  background-color: #003566;
+}
+.color[data-color='green'] {
+  background-color: #086046;
+}
+.color[data-color='yellow'] {
+  background-color: rgb(148, 148, 1);
+}
+.color[data-color='orange'] {
+  background-color: rgb(132, 86, 0);
+}
+.color[data-color='black'] {
+  background-color: rgb(26, 26, 26);
+}
+.color[data-color='purple'] {
+  background-color: rgb(95, 1, 95);
 }
 
 .popupmodal input {
@@ -504,8 +561,8 @@ input:focus {
 
 .createTaskModal {
   position: absolute;
-  top: 1rem;
-  left: 5rem;
+  top: 5rem;
+  left: 1rem;
   z-index: 999;
   transition: 0.3s all;
 }
@@ -575,10 +632,16 @@ input:focus {
   .editmodal {
     width: 30%;
   }
+  .listModal {
+    width: 40%;
+  }
 }
 @media (max-width: 750px) {
   .popupmodal,
   .editmodal {
+    width: 50%;
+  }
+  .listModal {
     width: 50%;
   }
 }
@@ -617,12 +680,23 @@ input:focus {
     white-space: pre-wrap;
   }
 
+  .listModal {
+    width: 80%;
+  }
+
   .taskCard {
     width: 70%;
   }
 
   .sidebar {
     /* transform: translateX(-100%); */
+  }
+  .sidebarToggle,
+  .createTaskModal {
+    width: 2rem;
+  }
+  .createTaskModal {
+    top: 4rem;
   }
 }
 

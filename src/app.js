@@ -90,6 +90,7 @@ const datum = document.querySelector('#duedate');
 function init() {
   view.showSidebar();
   controller.startCreatingList();
+  // view.containerColor();
   controller.startCreatingTask();
   controller.addTask();
   controller.addList();
