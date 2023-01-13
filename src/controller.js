@@ -90,6 +90,7 @@ export class Controller {
         // this.startCreatingTask();
         // this.addTask();
         view.toggleTaskLists();
+        view.toggleSidebar();
         const createTaskModal = document.querySelectorAll('.createTaskModal');
         createTaskModal.forEach((button) => {
           button.addEventListener('click', (e) => {
@@ -139,7 +140,6 @@ export class Controller {
       let index = lists.indexOf(lista);
 
       const todo = this.createTask(idAktivnog);
-      debugger;
       if (todo === undefined) return;
       else lists[index].tasks.push(todo);
       console.log(lists[index].tasks);
