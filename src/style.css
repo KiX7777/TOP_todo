@@ -480,8 +480,9 @@ input:focus {
 }
 
 .createTaskModal:hover {
-  fill: #003566;
-  color: white;
+  fill: black;
+  color: black;
+  outline: black;
 }
 
 .taskContainer h1 {
