@@ -19,7 +19,7 @@ const today = date.toISOString().split('T')[0];
 
 class View {
   //-----------------------------------------------------------------------------------------
-  // SHOW DATA STORED IN LOCAL STORAGE
+  // LOAD FROM LOCAL STORAGE
   //-----------------------------------------------------------------------------------------
 
   renderStarting() {
@@ -96,9 +96,8 @@ class View {
       // document.querySelector('.taskContainer .Default').style.display = 'flex';
     });
   }
-
   //-----------------------------------------------------------------------------------------
-  // SHOW POPUPS TO CREATE TASK/LIST
+  //SHOW POPUPS FOR LIST/TASK CREATION
   //-----------------------------------------------------------------------------------------
 
   createListPopup() {
@@ -117,6 +116,7 @@ class View {
 
   createTaskPopup() {
     if (lists.length < 1) {
+      console.log('nema liste');
       return;
     } else {
       overlay.style.display = 'block';
@@ -150,7 +150,7 @@ class View {
   }
 
   //-----------------------------------------------------------------------------------------
-  // RESET INPUTS
+  // RESET FORMS
   //-----------------------------------------------------------------------------------------
 
   resetForm(container) {
@@ -169,7 +169,7 @@ class View {
   }
 
   //-----------------------------------------------------------------------------------------
-  // LIST CARD CREATION
+  // CREATE LIST CARDS
   //-----------------------------------------------------------------------------------------
 
   createListCard(list) {
@@ -256,29 +256,18 @@ class View {
                                 <h1 >${list.title}</h1>                       
     `;
 
-    // let addTaskBtn = document.createElement('button');
-    // addTaskBtn.className = 'createTaskModal';
-    // addTaskBtn.textContent = 'TASK';
     taskcontainer.dataset.id = list.title;
     let findcolor = document.querySelector('.chosencolor');
     let color = window.getComputedStyle(findcolor).backgroundColor;
+    console.log(color);
     taskcontainer.dataset.color = color;
     list.color = color;
 
-    // let listcolor = document.querySelector('#color').value;
     let local = JSON.parse(localStorage.getItem('Lists'));
-    // if (local.length > 1) {
-    //   taskcontainer.style.backgroundColor = taskcontainer;
-    // } else {
-    //   taskcontainer.style.backgroundColor = color;
-    // }
+
     taskcontainer.style.backgroundColor = list.color;
     mainContainer.appendChild(taskcontainer);
   }
-
-  //-----------------------------------------------------------------------------------------
-  // CHOSE CONTAINER COLOR
-  //-----------------------------------------------------------------------------------------
 
   containerColor() {
     let cont = document.querySelector('div.active');
@@ -297,10 +286,19 @@ class View {
     });
   }
 
+  removeListCard() {
+    const deleteCardbtns = document.querySelectorAll('.deleteCardbtn');
+    deleteCardbtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        btn.parentElement.remove();
+      });
+    });
+  }
+
   //-----------------------------------------------------------------------------------------
   // MARK TASK AS FINISHED
   //-----------------------------------------------------------------------------------------
-
   doTask(container, lists) {
     const cont = document.querySelectorAll(`.${container}`);
 
@@ -322,6 +320,7 @@ class View {
           let taskindex = lists[listIndex].tasks.indexOf(deleteTask);
           lists[listIndex].tasks[taskindex].isDone = true;
           controller.saveLocal();
+          console.log('TASK FINISHED');
 
           check.style.fill = 'green';
           check.style.color = 'white';
@@ -336,13 +335,13 @@ class View {
     // let task = document.querySelector(`.${container}`);
   }
 
-  //---------------------------------------------------------------------------------//
-  // DELETION
-  //---------------------------------------------------------------------------------//
+  //-----------------------------------------------------------------------------------------
+  // REMOVE CARD
+  //-----------------------------------------------------------------------------------------
 
   removeCard(container, lists) {
     let buttonCont = document.querySelectorAll(`.${container}`);
-    //WHEN DELETE BUTTON IS CLICKED
+    //S
     buttonCont.forEach((container) => {
       container.querySelectorAll('.deleteCardbtn').forEach((btn) => {
         btn.addEventListener('click', (e) => {
@@ -350,6 +349,7 @@ class View {
           let card = e.target.parentNode;
 
           let cardToDelete = e.target.parentNode.closest('.card');
+          console.log(cardToDelete);
 
           cardToDelete.closest('.card').classList.add('fade-out');
           setTimeout(() => {
@@ -371,6 +371,7 @@ class View {
               lists.splice(listIndex, 1);
 
               containertoDelete.remove();
+              console.log(lists);
               controller.saveLocal();
               if (lists.length < 1) {
                 localStorage.removeItem('Lists');
@@ -392,14 +393,17 @@ class View {
             //IF TASK IS TO BE REMOVED
           } else if (cardToDelete.classList.contains('taskCard')) {
             let imeListe = cardToDelete.dataset.listId;
+            console.log(imeListe);
             let selectedList = lists.find((item) => item.title === imeListe);
             let listIndex = lists.indexOf(selectedList);
             let findTask = lists[listIndex].tasks.find(
               (task) => task.title === title.trim()
             );
             let taskindex = lists[listIndex].tasks.indexOf(findTask);
+            console.log(findTask, taskindex);
 
             lists[listIndex].tasks.splice(taskindex, 1);
+            console.log(lists[listIndex].tasks);
             controller.saveLocal();
             if (lists.length < 1) {
               localStorage.removeItem('Lists');
@@ -410,9 +414,9 @@ class View {
     });
   }
 
-  //---------------------------------------------------------------------------------//
-  // CARD CREATION
-  //---------------------------------------------------------------------------------//
+  //-----------------------------------------------------------------------------------------
+  // CREATE TASK
+  //-----------------------------------------------------------------------------------------
 
   createTaskCard(task) {
     let card = document.createElement('div');
@@ -484,18 +488,15 @@ class View {
       card.style.backgroundColor = '#06d6a0';
       card.classList.add('finished');
       card.dataset.finished = '';
-      const check = card.querySelector('.checkBtn');
-      check.style.fill = 'green';
-      check.style.color = 'white';
       taskContainer.appendChild(card);
     } else {
       taskContainer.appendChild(card);
     }
   }
 
-  //---------------------------------------------------------------------------------//
-  // SWITCH LISTS
-  //---------------------------------------------------------------------------------//
+  //-----------------------------------------------------------------------------------------
+  // TOGGLE LISTS
+  //-----------------------------------------------------------------------------------------
 
   toggleTaskLists() {
     let list = document.querySelectorAll('.listCard');
@@ -503,6 +504,7 @@ class View {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
+        console.log(e.target.textContent.trim());
         let naziv;
         if (e.target.className === 'title') {
           naziv = e.target.textContent.trim();
@@ -533,6 +535,7 @@ class View {
           let correctList = lists.find((item) => item.title === naziv.trim());
           let listIndex = lists.indexOf(correctList);
           let color = lists[listIndex].color;
+          console.log(color);
 
           container.style.display = 'flex';
           container.classList.add('active');
@@ -542,10 +545,9 @@ class View {
     );
   }
 
-  //---------------------------------------------------------------------------------//
-  // HIDE/SHOW SIDEBAR
-  //---------------------------------------------------------------------------------//
-
+  //-----------------------------------------------------------------------------------------
+  // SHOW/HIDE SIDEBAR
+  //-----------------------------------------------------------------------------------------
   showSidebar() {
     const sidebarBtn = document.querySelectorAll('.sidebarToggle');
 
@@ -562,10 +564,9 @@ class View {
     });
   }
 
-  //---------------------------------------------------------------------------------//
+  //-----------------------------------------------------------------------------------------
   // EDIT TASK
-  //---------------------------------------------------------------------------------//
-
+  //-----------------------------------------------------------------------------------------
   editTask(task, lists) {
     const cont = document.querySelectorAll(`.${task}`);
     cont.forEach((taskCard) => {
@@ -584,6 +585,9 @@ class View {
           let formnotes = document.getElementById('editNotes');
           let formdate = document.getElementById('editDueDate');
 
+          // let date = new Date(taskdate).toISOString();
+          // console.log(date);
+          console.log(taskname, card);
           formtitle.value = taskname.textContent.trim();
           formdesc.value = taskdesc.textContent;
           formnotes.value = tasknotes.textContent;
@@ -601,10 +605,12 @@ class View {
 
             let taskindex = lists[listIndex].tasks.indexOf(editTask);
             let tasktoEdit = lists[listIndex].tasks[taskindex];
+            console.log(tasktoEdit);
             tasktoEdit['title'] = formtitle.value;
             tasktoEdit['description'] = formdesc.value;
             tasktoEdit['notes'] = formnotes.value;
             tasktoEdit['dueDate'] = formdate.value;
+            console.log(tasktoEdit);
             taskname.textContent = formtitle.value;
             taskdesc.textContent = formdesc.value;
             tasknotes.textContent = formnotes.value;

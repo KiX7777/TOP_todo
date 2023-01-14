@@ -35,6 +35,12 @@ const addTaskBtn = document.querySelector('.napraviTask');
 const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 
+function start(list) {
+  // lists = list;
+  console.log(list);
+  console.log(lists);
+}
+
 function getLocal() {
   if (localStorage.getItem('Lists') === null) {
     console.log('no storage');
@@ -56,21 +62,24 @@ function load() {
   } else {
     let cache = JSON.parse(localStorage.getItem('Lists'));
     lists = cache;
+    console.log(cache, lists);
+    // view.renderStarting();
 
     lists.forEach((list) => {
       let ime = list.title.trim();
       let novaLista = new List(ime);
       // lists.push(novaLista);
+      console.log(lists);
       view.hideListPopup();
       view.createListCard(novaLista);
       let lista = lists.find((item) => item.title === ime);
       let index = lists.indexOf(lista);
-
-      view.doTask('taskContainer', lists);
+      console.log(lista, index);
 
       lista.tasks.forEach((task) => {
+        console.log(task);
+
         view.createTaskCard(task);
-        view.removeCard('taskContainer', lists);
       });
 
       //DEFAULT SE UČITAVA
@@ -85,6 +94,9 @@ function load() {
     init();
     view.toggleTaskLists();
     view.removeCard('listsContainer', lists);
+    view.removeCard('taskContainer', lists);
+    view.doTask('taskContainer', lists);
+    view.editTask('taskCard', lists);
   }
 }
 
@@ -106,7 +118,6 @@ const datum = document.querySelector('#duedate');
 function init() {
   view.showSidebar();
   controller.startCreatingList();
-  // controller.startCreatingTask();
   controller.addTask();
   controller.addList();
   startTask();

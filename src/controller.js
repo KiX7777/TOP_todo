@@ -24,68 +24,8 @@ const deleteCardbtn = document.querySelector('.deleteCardbtn');
 
 export class Controller {
   //-----------------------------------------------------------------------------------------
-  // ADD LIST
+  // TASK CREATION
   //-----------------------------------------------------------------------------------------
-
-  createList() {
-    let naziv = listName.value;
-    let msg = document.querySelector('.invalidListMsg');
-    if (!naziv || naziv.trim().length === 0) {
-      msg.style.display = 'inline-block';
-      // alert('INSERT CORRECT LIST NAME');
-      listName.addEventListener('input', () => {
-        msg.style.display = 'none';
-      });
-      return;
-    } else {
-      if (lists.find((item) => item.title === naziv)) {
-        alert('List with that name already exists! Choose another name.');
-        return;
-      } else {
-        return new List(naziv.trim());
-      }
-    }
-  }
-
-  addList() {
-    confirmListCreation.addEventListener('click', (e) => {
-      e.preventDefault();
-      let novaLista = this.createList();
-      if (typeof novaLista !== 'object') return;
-      else {
-        lists.push(novaLista);
-        view.hideListPopup();
-        view.createListCard(novaLista);
-        view.resetForm('listModal');
-        view.removeCard('listsContainer', lists);
-
-        view.toggleTaskLists();
-        view.showSidebar();
-        this.saveLocal();
-        const createTaskModal = document.querySelectorAll('.createTaskModal');
-        createTaskModal.forEach((button) => {
-          button.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            view.createTaskPopup();
-            // this.addTask();
-          });
-        });
-      }
-    });
-  }
-
-  startCreatingList() {
-    createListModal.addEventListener('click', () => {
-      view.createListPopup();
-      view.containerColor();
-    });
-  }
-
-  //-----------------------------------------------------------------------------------------
-  // ADD TASK
-  //-----------------------------------------------------------------------------------------
-
   createTask = (list) => {
     let taskTitle = title.value.trim();
     if (!taskTitle || !taskTitle.trim().length === 0) {
@@ -112,7 +52,6 @@ export class Controller {
       }
     }
   };
-
   addTask() {
     const createTaskModal = document.querySelectorAll('.createTaskModal');
 
@@ -128,6 +67,7 @@ export class Controller {
       let todo = this.createTask(idAktivnog);
       if (todo === undefined) return;
       else lists[index].tasks.push(todo);
+      console.log(lists[index].tasks);
       view.hideTaskPopup();
       view.resetForm('popupmodal');
       view.createTaskCard(todo);
@@ -136,6 +76,67 @@ export class Controller {
       view.editTask('taskCard', lists);
       view.resetForm('editmodal');
       this.saveLocal();
+    });
+  }
+
+  //-----------------------------------------------------------------------------------------
+  // LIST CREATION
+  //-----------------------------------------------------------------------------------------
+
+  createList() {
+    let naziv = listName.value;
+    let msg = document.querySelector('.invalidListMsg');
+    if (!naziv || naziv.trim().length === 0) {
+      msg.style.display = 'inline-block';
+      // alert('INSERT CORRECT LIST NAME');
+      listName.addEventListener('input', () => {
+        msg.style.display = 'none';
+      });
+      return;
+    } else {
+      if (lists.find((item) => item.title === naziv)) {
+        alert('List with that name already exists! Choose another name.');
+        return;
+      } else {
+        return new List(naziv.trim());
+      }
+    }
+
+    // const lista = new List(nazivListe);
+  }
+
+  addList() {
+    confirmListCreation.addEventListener('click', (e) => {
+      e.preventDefault();
+      let novaLista = this.createList();
+      if (typeof novaLista !== 'object') return;
+      else {
+        lists.push(novaLista);
+        console.log(lists);
+        view.hideListPopup();
+        view.createListCard(novaLista);
+        view.resetForm('listModal');
+        view.removeCard('listsContainer', lists);
+
+        view.toggleTaskLists();
+        view.showSidebar();
+        this.saveLocal();
+        const createTaskModal = document.querySelectorAll('.createTaskModal');
+        createTaskModal.forEach((button) => {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            view.createTaskPopup();
+            // this.addTask();
+          });
+        });
+      }
+    });
+  }
+  startCreatingList() {
+    createListModal.addEventListener('click', () => {
+      view.createListPopup();
+      view.containerColor();
     });
   }
 
