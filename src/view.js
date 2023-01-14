@@ -257,8 +257,6 @@ class View {
     taskcontainer.dataset.color = color;
     list.color = color;
 
-    let local = JSON.parse(localStorage.getItem('Lists'));
-
     taskcontainer.style.backgroundColor = list.color;
     mainContainer.appendChild(taskcontainer);
   }
@@ -347,9 +345,6 @@ class View {
           setTimeout(() => {
             cardToDelete.closest('.card').remove();
           }, 200);
-          // btn.addEventListener('transitionend', () => {
-          //   cardToDelete.closest('.card').remove();
-          // });
 
           let title = cardToDelete.querySelector('.title').textContent;
           let containertoDelete = document.querySelector(`.${title}`);
@@ -371,6 +366,7 @@ class View {
               //SWITCH TO PREVIOUS LIST
               let toggleTo = listIndex - 1;
               let name = lists[toggleTo].title;
+              let color = lists[toggleTo].color;
               document
                 .querySelectorAll('.taskContainer')
                 .forEach((container) => {
@@ -379,7 +375,9 @@ class View {
                 });
               document.querySelector(`.${name}`).style.display = 'flex';
               document.querySelector(`.${name}`).classList.add('active');
+              document.querySelector(`.${name}`).style.backgroundColor = color;
             }
+
             return;
             //IF TASK IS TO BE REMOVED
           } else if (cardToDelete.classList.contains('taskCard')) {

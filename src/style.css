@@ -4,10 +4,6 @@
   box-sizing: border-box;
 }
 
-:root {
-  /* color-scheme: light; */
-}
-
 @media (prefers-color-scheme: dark) {
   h1 {
     color: white;
@@ -431,9 +427,6 @@ input:invalid {
   border: 1px solid red;
 }
 
-.popupmodal {
-  /* position: relative; */
-}
 .listModal {
   border: 1px solid black;
 }
@@ -715,9 +708,6 @@ input:focus {
     width: 70%;
   }
 
-  .sidebar {
-    /* transform: translateX(-100%); */
-  }
   .sidebarToggle,
   .createTaskModal {
     width: 2rem;
