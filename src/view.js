@@ -618,6 +618,7 @@ class View {
             let shortDate = date.toLocaleDateString();
             taskdate.textContent = shortDate;
             this.hideEditPopup();
+            controller.saveLocal();
           });
 
           // this.hideEditPopup();
