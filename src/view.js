@@ -1,3 +1,4 @@
+import { lists } from './app.js';
 import controller from './controller.js';
 
 ///SELEKTORI
@@ -17,6 +18,89 @@ const date = new Date();
 const today = date.toISOString().split('T')[0];
 
 class View {
+  //-----------------------------------------------------------------------------------------
+  // SHOW DATA STORED IN LOCAL STORAGE
+  //-----------------------------------------------------------------------------------------
+
+  renderStarting() {
+    lists.forEach((list) => {
+      // this.createListCard(list);
+      let card = document.createElement('div');
+      card.classList = 'card listCard';
+      card.innerHTML = ` <p class="title">${list.title}</p>   <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke-width="1.5"
+    stroke="currentColor"
+    class="w-6 h-6 deleteCardbtn"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+    />
+  </svg>`;
+
+      listContainer.appendChild(card);
+
+      let taskcontainer = document.createElement('div');
+      taskcontainer.classList = `taskContainer ${list.title.replaceAll(
+        ' ',
+        ''
+      )} `;
+
+      taskcontainer.innerHTML = `
+      <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="1.5"
+      stroke="currentColor"
+      class="w-6 h-6 sidebarToggle"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+      />
+    </svg>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      class="w-6 h-6 createTaskModal active"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M5.625 1.5H9a3.75 3.75 0 013.75 3.75v1.875c0 1.036.84 1.875 1.875 1.875H16.5a3.75 3.75 0 013.75 3.75v7.875c0 1.035-.84 1.875-1.875 1.875H5.625a1.875 1.875 0 01-1.875-1.875V3.375c0-1.036.84-1.875 1.875-1.875zM12.75 12a.75.75 0 00-1.5 0v2.25H9a.75.75 0 000 1.5h2.25V18a.75.75 0 001.5 0v-2.25H15a.75.75 0 000-1.5h-2.25V12z"
+        clip-rule="evenodd"
+      ></path>
+      <path
+        d="M14.25 5.25a5.23 5.23 0 00-1.279-3.434 9.768 9.768 0 016.963 6.963A5.23 5.23 0 0016.5 7.5h-1.875a.375.375 0 01-.375-.375V5.25z"
+      ></path>
+    </svg>
+  
+  
+                                  <h1 >${list.title}</h1>                       
+      `;
+
+      document.querySelectorAll('div.taskContainer').forEach((container) => {
+        if (!container.classList.contains('Default')) {
+          container.classList.remove('active');
+          container.style.display = 'none';
+          taskcontainer.dataset.id = list.title;
+          mainContainer.appendChild(container);
+        }
+      });
+      // document.querySelector('.taskContainer .Default').style.display = 'flex';
+    });
+  }
+
+  //-----------------------------------------------------------------------------------------
+  // SHOW POPUPS TO CREATE TASK/LIST
+  //-----------------------------------------------------------------------------------------
+
   createListPopup() {
     overlay.style.display = 'block';
     listPopup.classList.toggle('scale-in-center');
@@ -32,10 +116,14 @@ class View {
   }
 
   createTaskPopup() {
-    overlay.style.display = 'block';
-    taskPopup.style.display = 'block';
-    dateInput.setAttribute('value', today);
-    title.focus();
+    if (lists.length < 1) {
+      return;
+    } else {
+      overlay.style.display = 'block';
+      taskPopup.style.display = 'block';
+      dateInput.setAttribute('value', today);
+      title.focus();
+    }
   }
   createEditPopup() {
     overlay.style.display = 'block';
@@ -61,6 +149,10 @@ class View {
     overlay.style.display = 'none';
   }
 
+  //-----------------------------------------------------------------------------------------
+  // RESET INPUTS
+  //-----------------------------------------------------------------------------------------
+
   resetForm(container) {
     let forms = document.querySelector(`.${container}`);
     // let listcolor = document.querySelector('#color').value;
@@ -76,6 +168,10 @@ class View {
     // Check if the dark-mode Media-Query matches
   }
 
+  //-----------------------------------------------------------------------------------------
+  // LIST CARD CREATION
+  //-----------------------------------------------------------------------------------------
+
   createListCard(list) {
     let id = 0;
     let card = document.createElement('div');
@@ -83,7 +179,8 @@ class View {
 
     // card.className = 'listCard';
     card.classList = 'card listCard';
-    card.innerHTML = ` <p class="title">${list.title}</p>   <svg
+    if (list.title !== 'Default') {
+      card.innerHTML = ` <p class="title">${list.title}</p>   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
@@ -97,6 +194,15 @@ class View {
       d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
     />
   </svg>`;
+    } else {
+      card.innerHTML = ` <p class="title">${list.title}</p> 
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+      />
+    </svg>`;
+    }
 
     //IF THERE IS A CONTAINER, HIDE PREVIOUS ONES AND DISPLAY THE NEW ONE
     if (document.querySelector('.taskContainer')) {
@@ -156,13 +262,23 @@ class View {
     taskcontainer.dataset.id = list.title;
     let findcolor = document.querySelector('.chosencolor');
     let color = window.getComputedStyle(findcolor).backgroundColor;
-    console.log(color);
+    taskcontainer.dataset.color = color;
+    list.color = color;
 
     // let listcolor = document.querySelector('#color').value;
-
-    taskcontainer.style.backgroundColor = color;
+    let local = JSON.parse(localStorage.getItem('Lists'));
+    // if (local.length > 1) {
+    //   taskcontainer.style.backgroundColor = taskcontainer;
+    // } else {
+    //   taskcontainer.style.backgroundColor = color;
+    // }
+    taskcontainer.style.backgroundColor = list.color;
     mainContainer.appendChild(taskcontainer);
   }
+
+  //-----------------------------------------------------------------------------------------
+  // CHOSE CONTAINER COLOR
+  //-----------------------------------------------------------------------------------------
 
   containerColor() {
     let cont = document.querySelector('div.active');
@@ -181,15 +297,9 @@ class View {
     });
   }
 
-  removeListCard() {
-    const deleteCardbtns = document.querySelectorAll('.deleteCardbtn');
-    deleteCardbtns.forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopImmediatePropagation();
-        btn.parentElement.remove();
-      });
-    });
-  }
+  //-----------------------------------------------------------------------------------------
+  // MARK TASK AS FINISHED
+  //-----------------------------------------------------------------------------------------
 
   doTask(container, lists) {
     const cont = document.querySelectorAll(`.${container}`);
@@ -209,14 +319,14 @@ class View {
           const deleteTask = lists[listIndex].tasks.find(
             (item) => item.title === taskname.trim()
           );
-
           let taskindex = lists[listIndex].tasks.indexOf(deleteTask);
-          lists[listIndex].tasks[taskindex].doTask();
-          console.log('TASK FINISHED');
+          lists[listIndex].tasks[taskindex].isDone = true;
+          controller.saveLocal();
 
           check.style.fill = 'green';
           check.style.color = 'white';
           card.style.background = 'none';
+          card.classList.add('finished');
           card.dataset.finished = '';
           card.style.backgroundColor = '#06d6a0';
         });
@@ -226,8 +336,13 @@ class View {
     // let task = document.querySelector(`.${container}`);
   }
 
+  //---------------------------------------------------------------------------------//
+  // DELETION
+  //---------------------------------------------------------------------------------//
+
   removeCard(container, lists) {
     let buttonCont = document.querySelectorAll(`.${container}`);
+    //WHEN DELETE BUTTON IS CLICKED
     buttonCont.forEach((container) => {
       container.querySelectorAll('.deleteCardbtn').forEach((btn) => {
         btn.addEventListener('click', (e) => {
@@ -235,7 +350,6 @@ class View {
           let card = e.target.parentNode;
 
           let cardToDelete = e.target.parentNode.closest('.card');
-          console.log(cardToDelete);
 
           cardToDelete.closest('.card').classList.add('fade-out');
           setTimeout(() => {
@@ -247,8 +361,7 @@ class View {
 
           let title = cardToDelete.querySelector('.title').textContent;
           let containertoDelete = document.querySelector(`.${title}`);
-          //LOGIKA -- UVJET ZA BRISANJE LISTE
-          // debugger;
+          // IF LIST IS TO BE REMOVED
           if (cardToDelete.classList.contains('listCard')) {
             let correctList = lists.find((item) => item.title === title.trim());
             let listIndex = lists.indexOf(correctList);
@@ -258,27 +371,48 @@ class View {
               lists.splice(listIndex, 1);
 
               containertoDelete.remove();
-              console.log(lists);
+              controller.saveLocal();
+              if (lists.length < 1) {
+                localStorage.removeItem('Lists');
+              }
+
+              //SWITCH TO PREVIOUS LIST
+              let toggleTo = listIndex - 1;
+              let name = lists[toggleTo].title;
+              document
+                .querySelectorAll('.taskContainer')
+                .forEach((container) => {
+                  container.style.display = 'none';
+                  container.classList.remove('active');
+                });
+              document.querySelector(`.${name}`).style.display = 'flex';
+              document.querySelector(`.${name}`).classList.add('active');
             }
             return;
+            //IF TASK IS TO BE REMOVED
           } else if (cardToDelete.classList.contains('taskCard')) {
             let imeListe = cardToDelete.dataset.listId;
-            console.log(imeListe);
             let selectedList = lists.find((item) => item.title === imeListe);
             let listIndex = lists.indexOf(selectedList);
             let findTask = lists[listIndex].tasks.find(
               (task) => task.title === title.trim()
             );
             let taskindex = lists[listIndex].tasks.indexOf(findTask);
-            console.log(findTask, taskindex);
 
             lists[listIndex].tasks.splice(taskindex, 1);
-            console.log(lists[listIndex].tasks);
+            controller.saveLocal();
+            if (lists.length < 1) {
+              localStorage.removeItem('Lists');
+            }
           }
         });
       });
     });
   }
+
+  //---------------------------------------------------------------------------------//
+  // CARD CREATION
+  //---------------------------------------------------------------------------------//
 
   createTaskCard(task) {
     let card = document.createElement('div');
@@ -345,8 +479,23 @@ class View {
                       </div>
 `;
 
-    taskContainer.appendChild(card);
+    if (task.isDone === true) {
+      card.style.background = 'none';
+      card.style.backgroundColor = '#06d6a0';
+      card.classList.add('finished');
+      card.dataset.finished = '';
+      const check = card.querySelector('.checkBtn');
+      check.style.fill = 'green';
+      check.style.color = 'white';
+      taskContainer.appendChild(card);
+    } else {
+      taskContainer.appendChild(card);
+    }
   }
+
+  //---------------------------------------------------------------------------------//
+  // SWITCH LISTS
+  //---------------------------------------------------------------------------------//
 
   toggleTaskLists() {
     let list = document.querySelectorAll('.listCard');
@@ -354,11 +503,12 @@ class View {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        console.log(e.target.textContent.trim());
         let naziv;
         if (e.target.className === 'title') {
-          naziv = e.target.textContent;
-          let container = document.querySelector(`.taskContainer.${naziv}`);
+          naziv = e.target.textContent.trim();
+          let container = document.querySelector(
+            `.taskContainer.${naziv.replaceAll(' ', '')}`
+          );
 
           document.querySelectorAll('.taskContainer').forEach((container) => {
             container.style.display = 'none';
@@ -368,9 +518,11 @@ class View {
           container.style.display = 'flex';
           container.classList.add('active');
         } else {
-          naziv = e.target.querySelector('.title').textContent;
+          naziv = e.target.querySelector(`.title`).textContent;
 
-          let container = document.querySelector(`.taskContainer.${naziv}`);
+          let container = document.querySelector(
+            `.taskContainer.${naziv.replaceAll(' ', '')}`
+          );
 
           document.querySelectorAll('.taskContainer').forEach((container) => {
             container.style.display = 'none';
@@ -378,12 +530,21 @@ class View {
             container.classList.add('.swing-top-fwd');
           });
 
+          let correctList = lists.find((item) => item.title === naziv.trim());
+          let listIndex = lists.indexOf(correctList);
+          let color = lists[listIndex].color;
+
           container.style.display = 'flex';
           container.classList.add('active');
+          container.style.backgroundColor = color;
         }
       })
     );
   }
+
+  //---------------------------------------------------------------------------------//
+  // HIDE/SHOW SIDEBAR
+  //---------------------------------------------------------------------------------//
 
   showSidebar() {
     const sidebarBtn = document.querySelectorAll('.sidebarToggle');
@@ -400,6 +561,10 @@ class View {
       });
     });
   }
+
+  //---------------------------------------------------------------------------------//
+  // EDIT TASK
+  //---------------------------------------------------------------------------------//
 
   editTask(task, lists) {
     const cont = document.querySelectorAll(`.${task}`);
@@ -419,9 +584,6 @@ class View {
           let formnotes = document.getElementById('editNotes');
           let formdate = document.getElementById('editDueDate');
 
-          // let date = new Date(taskdate).toISOString();
-          // console.log(date);
-          console.log(taskname, card);
           formtitle.value = taskname.textContent.trim();
           formdesc.value = taskdesc.textContent;
           formnotes.value = tasknotes.textContent;
@@ -439,12 +601,10 @@ class View {
 
             let taskindex = lists[listIndex].tasks.indexOf(editTask);
             let tasktoEdit = lists[listIndex].tasks[taskindex];
-            console.log(tasktoEdit);
             tasktoEdit['title'] = formtitle.value;
             tasktoEdit['description'] = formdesc.value;
             tasktoEdit['notes'] = formnotes.value;
             tasktoEdit['dueDate'] = formdate.value;
-            console.log(tasktoEdit);
             taskname.textContent = formtitle.value;
             taskdesc.textContent = formdesc.value;
             tasknotes.textContent = formnotes.value;

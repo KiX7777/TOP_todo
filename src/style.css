@@ -360,13 +360,13 @@ body {
 }
 
 .color[data-color='red'] {
-  background-color: rgba(143, 4, 4, 0.977);
+  background-color: rgb(143, 4, 4);
 }
 .color[data-color='blue'] {
-  background-color: #003566;
+  background-color: rgb(0, 53, 102);
 }
 .color[data-color='green'] {
-  background-color: #086046;
+  background-color: rgb(8, 96, 70);
 }
 .color[data-color='yellow'] {
   background-color: rgb(148, 148, 1);

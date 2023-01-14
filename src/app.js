@@ -10,8 +10,8 @@ export class List {
   }
 }
 
-const basicTodos = new List('Default');
-lists.push(basicTodos);
+let basicTodos = new List('Default');
+// lists.push(basicTodos);
 
 export class Task {
   constructor(title, description, dueDate, priority, notes, list) {
@@ -35,42 +35,58 @@ const addTaskBtn = document.querySelector('.napraviTask');
 const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 
-// ADD TASK
+function getLocal() {
+  if (localStorage.getItem('Lists') === null) {
+    console.log('no storage');
+    return;
+  } else {
+    let item = localStorage.getItem('Lists');
+    let data = JSON.parse(item);
+    return data;
+  }
+}
 
-// addTaskBtn.addEventListener('click', () => {
-//   const todo = createTask();
-//   // console.log(todo);
-//   basicTodos.tasks.push(todo);
-//   console.log(basicTodos.tasks);
-//   view.showTasks(basicTodos);
-//   // overlay.style.display = 'block';
-// });
+function load() {
+  if (localStorage.getItem('Lists') === null) {
+    let novaLista = new List('Default');
+    lists.push(novaLista);
+    view.createListCard(novaLista);
+    controller.saveLocal();
+    init();
+  } else {
+    let cache = JSON.parse(localStorage.getItem('Lists'));
+    lists = cache;
 
-//PRVO NAPRAVI LISTU
+    lists.forEach((list) => {
+      let ime = list.title.trim();
+      let novaLista = new List(ime);
+      // lists.push(novaLista);
+      view.hideListPopup();
+      view.createListCard(novaLista);
+      let lista = lists.find((item) => item.title === ime);
+      let index = lists.indexOf(lista);
 
-// controller.addTask('kiko');
+      view.doTask('taskContainer', lists);
 
-// controller.doTaskBtn.addEventListener('click', () => {
-//   for (let task of basicTodos.tasks) {
-//     task.doTask();
-//     console.log(task.isDone);
-//   }
-// });
+      lista.tasks.forEach((task) => {
+        view.createTaskCard(task);
+        view.removeCard('taskContainer', lists);
+      });
 
-// deleteTaskBtn.addEventListener('click', () => {
-//   deleteTask();
-//   console.log(basicTodos);
-// });
+      //DEFAULT SE UČITAVA
+      document.querySelectorAll('.taskContainer').forEach((container) => {
+        container.style.display = 'none';
+        container.classList.remove('active');
+      });
+      document.querySelector('.Default').style.display = 'flex';
+      document.querySelector('.Default').classList.add('active');
+    });
 
-// console.log(createTask());
-// const brijanje = createTask(
-//   'Brijanje',
-//   'Obrijati se',
-//   'January 7, 2023',
-//   'high'
-// );
-
-// console.log(brijanje);
+    init();
+    view.toggleTaskLists();
+    view.removeCard('listsContainer', lists);
+  }
+}
 
 function startTask() {
   const createTaskModal = document.querySelectorAll('.createTaskModal');
@@ -90,23 +106,10 @@ const datum = document.querySelector('#duedate');
 function init() {
   view.showSidebar();
   controller.startCreatingList();
-  // view.containerColor();
-  controller.startCreatingTask();
+  // controller.startCreatingTask();
   controller.addTask();
   controller.addList();
   startTask();
-
-  // controller.startCreatingTask();
-  // controller.addTask();
-  // controller.editTask();
-  // controller.doTask('taskContainer');
-  // view.deleteTask();
 }
 
-init();
-
-// controller.waitForElm('.taskCard').then((elm) => {
-//   console.log('Element is ready');
-//   console.log(elm.textContent);
-//   view.editTask('taskContainer', lists);
-// });
+load();
