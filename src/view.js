@@ -116,7 +116,6 @@ class View {
 
   createTaskPopup() {
     if (lists.length < 1) {
-      console.log('nema liste');
       return;
     } else {
       overlay.style.display = 'block';
@@ -162,10 +161,6 @@ class View {
       dateInput.value = today;
       priority.value = '';
     });
-
-    // Check to see if Media-Queries are supported
-
-    // Check if the dark-mode Media-Query matches
   }
 
   //-----------------------------------------------------------------------------------------
@@ -259,7 +254,6 @@ class View {
     taskcontainer.dataset.id = list.title;
     let findcolor = document.querySelector('.chosencolor');
     let color = window.getComputedStyle(findcolor).backgroundColor;
-    console.log(color);
     taskcontainer.dataset.color = color;
     list.color = color;
 
@@ -320,7 +314,6 @@ class View {
           let taskindex = lists[listIndex].tasks.indexOf(deleteTask);
           lists[listIndex].tasks[taskindex].isDone = true;
           controller.saveLocal();
-          console.log('TASK FINISHED');
 
           check.style.fill = 'green';
           check.style.color = 'white';
@@ -349,7 +342,6 @@ class View {
           let card = e.target.parentNode;
 
           let cardToDelete = e.target.parentNode.closest('.card');
-          console.log(cardToDelete);
 
           cardToDelete.closest('.card').classList.add('fade-out');
           setTimeout(() => {
@@ -371,7 +363,6 @@ class View {
               lists.splice(listIndex, 1);
 
               containertoDelete.remove();
-              console.log(lists);
               controller.saveLocal();
               if (lists.length < 1) {
                 localStorage.removeItem('Lists');
@@ -393,17 +384,14 @@ class View {
             //IF TASK IS TO BE REMOVED
           } else if (cardToDelete.classList.contains('taskCard')) {
             let imeListe = cardToDelete.dataset.listId;
-            console.log(imeListe);
             let selectedList = lists.find((item) => item.title === imeListe);
             let listIndex = lists.indexOf(selectedList);
             let findTask = lists[listIndex].tasks.find(
               (task) => task.title === title.trim()
             );
             let taskindex = lists[listIndex].tasks.indexOf(findTask);
-            console.log(findTask, taskindex);
 
             lists[listIndex].tasks.splice(taskindex, 1);
-            console.log(lists[listIndex].tasks);
             controller.saveLocal();
             if (lists.length < 1) {
               localStorage.removeItem('Lists');
@@ -484,10 +472,13 @@ class View {
 `;
 
     if (task.isDone === true) {
+      const check = card.querySelector('.checkBtn');
       card.style.background = 'none';
       card.style.backgroundColor = '#06d6a0';
       card.classList.add('finished');
       card.dataset.finished = '';
+      check.style.fill = 'green';
+      check.style.color = 'white';
       taskContainer.appendChild(card);
     } else {
       taskContainer.appendChild(card);
@@ -504,7 +495,6 @@ class View {
       card.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopImmediatePropagation();
-        console.log(e.target.textContent.trim());
         let naziv;
         if (e.target.className === 'title') {
           naziv = e.target.textContent.trim();
@@ -519,6 +509,13 @@ class View {
 
           container.style.display = 'flex';
           container.classList.add('active');
+          let correctList = lists.find((item) => item.title === naziv.trim());
+          let listIndex = lists.indexOf(correctList);
+          let color = lists[listIndex].color;
+
+          container.style.display = 'flex';
+          container.classList.add('active');
+          container.style.backgroundColor = color;
         } else {
           naziv = e.target.querySelector(`.title`).textContent;
 
@@ -535,7 +532,6 @@ class View {
           let correctList = lists.find((item) => item.title === naziv.trim());
           let listIndex = lists.indexOf(correctList);
           let color = lists[listIndex].color;
-          console.log(color);
 
           container.style.display = 'flex';
           container.classList.add('active');
@@ -585,9 +581,6 @@ class View {
           let formnotes = document.getElementById('editNotes');
           let formdate = document.getElementById('editDueDate');
 
-          // let date = new Date(taskdate).toISOString();
-          // console.log(date);
-          console.log(taskname, card);
           formtitle.value = taskname.textContent.trim();
           formdesc.value = taskdesc.textContent;
           formnotes.value = tasknotes.textContent;
@@ -605,12 +598,10 @@ class View {
 
             let taskindex = lists[listIndex].tasks.indexOf(editTask);
             let tasktoEdit = lists[listIndex].tasks[taskindex];
-            console.log(tasktoEdit);
             tasktoEdit['title'] = formtitle.value;
             tasktoEdit['description'] = formdesc.value;
             tasktoEdit['notes'] = formnotes.value;
             tasktoEdit['dueDate'] = formdate.value;
-            console.log(tasktoEdit);
             taskname.textContent = formtitle.value;
             taskdesc.textContent = formdesc.value;
             tasknotes.textContent = formnotes.value;

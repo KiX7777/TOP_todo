@@ -9,9 +9,9 @@ export class List {
     this.tasks = [];
   }
 }
+//INITIAL LIST
 
 let basicTodos = new List('Default');
-// lists.push(basicTodos);
 
 export class Task {
   constructor(title, description, dueDate, priority, notes, list) {
@@ -29,18 +29,16 @@ export class Task {
   }
 }
 
-const overlay = document.querySelector('.overlay');
+//DOM SELECTORS
+//-----------------------------------------------------------
 
+const overlay = document.querySelector('.overlay');
 const addTaskBtn = document.querySelector('.napraviTask');
 const doTaskBtn = document.querySelector('.odradiTask');
 const deleteTaskBtn = document.querySelector('.obrišiTask');
 
-function start(list) {
-  // lists = list;
-  console.log(list);
-  console.log(lists);
-}
-
+// GET DATA FROM LOCAL STORAGE
+//-----------------------------------------------------------
 function getLocal() {
   if (localStorage.getItem('Lists') === null) {
     console.log('no storage');
@@ -52,6 +50,8 @@ function getLocal() {
   }
 }
 
+// LOAD AND SHOW DATA FROM LOCAL STORAGE
+//-----------------------------------------------------------
 function load() {
   if (localStorage.getItem('Lists') === null) {
     let novaLista = new List('Default');
@@ -63,12 +63,10 @@ function load() {
     let cache = JSON.parse(localStorage.getItem('Lists'));
     lists = cache;
     console.log(cache, lists);
-    // view.renderStarting();
 
     lists.forEach((list) => {
       let ime = list.title.trim();
       let novaLista = new List(ime);
-      // lists.push(novaLista);
       console.log(lists);
       view.hideListPopup();
       view.createListCard(novaLista);
@@ -100,6 +98,7 @@ function load() {
   }
 }
 
+// ALLOW CREATING TASK
 function startTask() {
   const createTaskModal = document.querySelectorAll('.createTaskModal');
   createTaskModal.forEach((button) => {
@@ -112,9 +111,7 @@ function startTask() {
   });
 }
 
-const datum = document.querySelector('#duedate');
-// console.log(datum.value);
-
+// START APP
 function init() {
   view.showSidebar();
   controller.startCreatingList();

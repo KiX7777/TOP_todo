@@ -67,7 +67,6 @@ export class Controller {
       let todo = this.createTask(idAktivnog);
       if (todo === undefined) return;
       else lists[index].tasks.push(todo);
-      console.log(lists[index].tasks);
       view.hideTaskPopup();
       view.resetForm('popupmodal');
       view.createTaskCard(todo);
@@ -112,7 +111,6 @@ export class Controller {
       if (typeof novaLista !== 'object') return;
       else {
         lists.push(novaLista);
-        console.log(lists);
         view.hideListPopup();
         view.createListCard(novaLista);
         view.resetForm('listModal');
