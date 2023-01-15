@@ -387,8 +387,21 @@ p.taskCardinfo.title:hover::-webkit-scrollbar-thumb {
   background-color: white;
   border-radius: 50%;
 }
-.closetaskmodal img {
+.closetaskmodal img,
+.closelistmodal img,
+.closeeditmodal img {
   width: 100%;
+  background-color: #001d3d;
+  height: 100%;
+  color: white;
+  fill: white;
+  border-radius: 50%;
+  transition: 0.3s all;
+}
+.closetaskmodal img:hover,
+.closelistmodal img:hover,
+.closeeditmodal img:hover {
+  background-color: rgb(167, 3, 3);
 }
 
 .colors {
@@ -536,7 +549,7 @@ input:focus {
 .addTask,
 .addList,
 .editTask {
-  width: 30%;
+  width: fit-content;
   padding: 1rem;
   align-self: center;
   background-color: transparent;
@@ -545,6 +558,15 @@ input:focus {
   border-radius: 0.5rem;
   transition: 0.4s all;
   cursor: pointer;
+}
+
+.addTask:hover,
+.addList:hover,
+.editTask:hover {
+  /* background-color: #012b58; */
+  background-color: white;
+  color: #001d3d;
+  font-weight: bold;
 }
 .taskCardinfo.title {
   font-weight: bold;
@@ -557,9 +579,6 @@ input:focus {
   color: white;
 }
 
-.addTask:hover {
-  background-color: rgb(118, 232, 192);
-}
 .taskCardinfo {
   font-size: 1.4rem;
   white-space: pre-wrap;
