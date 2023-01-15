@@ -112,7 +112,7 @@ export class Controller {
         alert('List with that name already exists! Choose another name.');
         return;
       } else {
-        return new List(naziv.trim());
+        return new List(naziv);
       }
     }
 

@@ -105,6 +105,12 @@ class View {
     listPopup.classList.toggle('scale-in-center');
     listPopup.style.display = 'block';
     document.querySelector('.listName').focus();
+    document.querySelector('.listName').addEventListener('keydown', (e) => {
+      if (e.keyCode === 32) {
+        e.preventDefault();
+        alert('Whitespace is not allowed in list name');
+      }
+    });
   }
 
   hideListPopup() {

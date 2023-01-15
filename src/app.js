@@ -89,15 +89,19 @@ function load() {
       document.querySelector('.Default').classList.add('active');
     });
 
-    document.addEventListener('keydown', (e) => {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      if (e.key === 'Escape') {
-        view.hideEditPopup();
-        view.hideListPopup();
-        view.hideTaskPopup();
-      }
-    });
+    // document.addEventListener('keydown', (e) => {
+    //   console.log(e.key);
+    //   e.preventDefault();
+
+    //   if (e.ctrlKey || e.metaKey) {
+    //     console.log('da');
+    //     return;
+    //   } else if (e.key === 'Escape') {
+    //     view.hideEditPopup();
+    //     view.hideListPopup();
+    //     view.hideTaskPopup();
+    //   }
+    // });
 
     init();
     view.toggleTaskLists();
