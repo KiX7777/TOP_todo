@@ -372,6 +372,25 @@ p.taskCardinfo.title:hover::-webkit-scrollbar-thumb {
   /* padding: 2rem; */
 }
 
+.popup {
+  display: block;
+}
+
+.closetaskmodal {
+  width: 1.8rem;
+  height: 1.8rem;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  cursor: pointer;
+
+  background-color: white;
+  border-radius: 50%;
+}
+.closetaskmodal img {
+  width: 100%;
+}
+
 .colors {
   display: flex;
   width: 100%;
@@ -459,15 +478,6 @@ input:invalid {
 .listModal input {
   color: white;
   border: 1px solid white;
-}
-
-.popupmodal::after {
-  content: 'Title is required';
-  position: absolute;
-  top: 0;
-  right: 5%;
-  color: red;
-  display: block;
 }
 
 .invalidListMsg {

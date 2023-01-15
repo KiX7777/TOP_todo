@@ -55,6 +55,20 @@ export class Controller {
   addTask() {
     const createTaskModal = document.querySelectorAll('.createTaskModal');
 
+    const close = document.querySelector('.closetaskmodalimg');
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      view.hideTaskPopup();
+      view.resetForm('popupmodal');
+    });
+
+    const closeedit = document.querySelector('.closeeditmodalimg');
+    closeedit.addEventListener('click', (e) => {
+      e.preventDefault();
+      view.hideEditPopup();
+      view.resetForm('editmodal');
+    });
+
     confirmTaskCreation.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -67,6 +81,7 @@ export class Controller {
       let todo = this.createTask(idAktivnog);
       if (todo === undefined) return;
       else lists[index].tasks.push(todo);
+
       view.hideTaskPopup();
       view.resetForm('popupmodal');
       view.createTaskCard(todo);
@@ -135,6 +150,13 @@ export class Controller {
     createListModal.addEventListener('click', () => {
       view.createListPopup();
       view.containerColor();
+      const close = document.querySelector('.closelistmodalimg');
+      close.addEventListener('click', (e) => {
+        e.preventDefault();
+        view.hideListPopup();
+        console.log('tes');
+        view.resetForm('listModal');
+      });
     });
   }
 

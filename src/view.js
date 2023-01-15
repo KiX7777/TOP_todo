@@ -128,6 +128,12 @@ class View {
     overlay.style.display = 'block';
     editPopup.style.display = 'block';
     dateInput.setAttribute('value', today);
+    const close = document.querySelector('.closetaskmodalimg');
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      view.hideTaskPopup();
+      console.log('tes');
+    });
   }
 
   hideTaskPopup() {
@@ -584,6 +590,7 @@ class View {
           formnotes.value = tasknotes.textContent;
           formdate.value = today;
           this.createEditPopup();
+
           savebtn.addEventListener('click', (e) => {
             e.preventDefault();
             let imeListe = card.dataset.listId;
