@@ -110,6 +110,9 @@ class View {
         e.preventDefault();
         alert('Whitespace is not allowed in list name');
       }
+      if (e.key === 'Escape') {
+        this.hideListPopup();
+      }
     });
   }
 
@@ -596,6 +599,13 @@ class View {
           formnotes.value = tasknotes.textContent;
           formdate.value = today;
           this.createEditPopup();
+          formtitle.focus();
+          let escape = document.querySelector('.editmodal');
+          escape.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+              this.hideEditPopup();
+            }
+          });
 
           savebtn.addEventListener('click', (e) => {
             e.preventDefault();

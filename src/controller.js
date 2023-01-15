@@ -68,6 +68,12 @@ export class Controller {
       view.hideEditPopup();
       view.resetForm('editmodal');
     });
+    let escape = document.querySelector('.popupmodal');
+    escape.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        view.hideTaskPopup();
+      }
+    });
 
     confirmTaskCreation.addEventListener('click', (e) => {
       e.preventDefault();
@@ -134,6 +140,7 @@ export class Controller {
         view.toggleTaskLists();
         view.showSidebar();
         this.saveLocal();
+
         const createTaskModal = document.querySelectorAll('.createTaskModal');
         createTaskModal.forEach((button) => {
           button.addEventListener('click', (e) => {
