@@ -74,6 +74,12 @@ export class Controller {
         view.hideTaskPopup();
       }
     });
+    let overlay = document.querySelector('.overlay');
+    overlay.addEventListener('click', () => {
+      view.hideTaskPopup();
+      view.hideEditPopup();
+      view.hideListPopup();
+    });
 
     confirmTaskCreation.addEventListener('click', (e) => {
       e.preventDefault();
