@@ -418,21 +418,20 @@ class View {
     let shortDate = task.dueDate.slice(0, 13);
 
     card.innerHTML = `
-                      <p class="taskCardinfo title"><strong>${
-                        task.title
-                      }</strong> ${
-      task.priority === 'important'
-        ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 important">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-      </svg>
-      `
-        : ''
-    }</p>
-                      <p class="taskCardinfo description">${
+                      <span class="taskCardinfo title">${task.title.trim()}</span>
+                      ${
+                        task.priority === 'important'
+                          ? `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 important">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        </svg>
+                        `
+                          : ''
+                      }
+                      <span class="taskCardinfo description">${
                         task.description
-                      }</p>
-                      <p class="taskCardinfo duedate"><strong>Due date: </strong>${shortDate}</p>
-                      <p class="taskCardinfo notes">${task.notes}</p>
+                      }</span>
+                      <span class="taskCardinfo duedate">${shortDate}</span>
+                      <span class="taskCardinfo notes">${task.notes}</span>
 
                       <div class="cardBtns ">
                         <svg
@@ -579,7 +578,8 @@ class View {
           let formnotes = document.getElementById('editNotes');
           let formdate = document.getElementById('editDueDate');
 
-          formtitle.value = taskname.textContent.trim();
+          formtitle.value = taskname.textContent;
+          console.log(taskname.textContent);
           formdesc.value = taskdesc.textContent;
           formnotes.value = tasknotes.textContent;
           formdate.value = today;
@@ -594,17 +594,17 @@ class View {
               (item) => item.title === taskname.textContent.trim()
             );
 
-            let taskindex = lists[listIndex].tasks.indexOf(editTask);
-            let tasktoEdit = lists[listIndex].tasks[taskindex];
-            tasktoEdit['title'] = formtitle.value;
-            tasktoEdit['description'] = formdesc.value;
-            tasktoEdit['notes'] = formnotes.value;
-            tasktoEdit['dueDate'] = formdate.value;
-            taskname.textContent = formtitle.value;
-            taskdesc.textContent = formdesc.value;
-            tasknotes.textContent = formnotes.value;
             let date = new Date(formdate.value);
             let shortDate = date.toLocaleDateString();
+            let taskindex = lists[listIndex].tasks.indexOf(editTask);
+            let tasktoEdit = lists[listIndex].tasks[taskindex];
+            tasktoEdit['title'] = formtitle.value.trim();
+            tasktoEdit['description'] = formdesc.value.trim();
+            tasktoEdit['notes'] = formnotes.value.trim();
+            tasktoEdit['dueDate'] = shortDate;
+            taskname.textContent = formtitle.value.trim();
+            taskdesc.textContent = formdesc.value.trim();
+            tasknotes.textContent = formnotes.value.trim();
             taskdate.textContent = shortDate;
             this.hideEditPopup();
             controller.saveLocal();

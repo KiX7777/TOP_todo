@@ -157,11 +157,15 @@ body {
   width: 2rem;
   cursor: pointer;
   transition: 0.4s all;
+  align-self: center;
 }
 
 .important {
   color: black;
   fill: red;
+  position: absolute;
+  top: 5%;
+  right: 5%;
 }
 .deleteCardbtn:hover {
   color: red;
@@ -208,6 +212,7 @@ body {
   width: 20rem;
   height: 24rem;
   color: white;
+  position: relative;
   /* background-color: #00b4d8; */
   background: #0575e6; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -226,6 +231,7 @@ body {
   border: 0.5px solid white;
   box-shadow: 0 2px 7px -2px black;
   border-radius: 1rem;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 1rem;
@@ -256,13 +262,26 @@ body {
 
 .taskCardinfo {
   font-size: 1.2rem;
-  display: flex;
   align-items: center;
   justify-content: space-evenly;
   text-align: justify;
+  overflow: inherit;
 }
 .taskCardinfo.notes {
+  width: 70%;
+  /* padding: 1rem; */
   display: inline-block;
+  text-align: center;
+  position: relative;
+  height: 50%;
+}
+.taskCardinfo.duedate,
+.taskCardinfo.description,
+.taskCardinfo.title {
+  text-align: center;
+  height: 2rem;
+  position: relative;
+  width: 90%;
 }
 
 .listCard::first-letter {
@@ -278,7 +297,7 @@ body {
   margin-left: 10px;
   border-radius: 1rem;
 
-  background-color: rgb(103, 158, 192);
+  background-color: rgba(0, 0, 0, 0.301);
 }
 
 .taskCardinfo::-webkit-scrollbar-thumb {
@@ -320,6 +339,11 @@ p.taskCardinfo.title:hover::-webkit-scrollbar-thumb {
     opacity: 1;
   }
 }
+.duedate {
+  font-weight: bold;
+  height: 2rem !important;
+  display: inline-block;
+}
 
 .success {
   width: fit-content;
@@ -351,6 +375,7 @@ p.taskCardinfo.title:hover::-webkit-scrollbar-thumb {
 .colors {
   display: flex;
   width: 100%;
+  margin-top: 1rem;
   gap: 1rem;
   align-items: center;
   justify-content: center;
@@ -476,9 +501,6 @@ input[type='date']:before {
   margin-right: 0.5em;
 }
 
-#notes {
-  height: 10rem;
-}
 input:focus {
   filter: blur(0);
 }
@@ -518,6 +540,7 @@ input:focus {
   font-weight: bold;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  font-size: 1.8rem;
 }
 
 .listName::placeholder {
@@ -529,10 +552,14 @@ input:focus {
 }
 .taskCardinfo {
   font-size: 1.4rem;
-  overflow: auto;
   white-space: pre-wrap;
 }
 
+span {
+  height: 2rem;
+  display: inline-block;
+  overflow: inherit;
+}
 .sidebarToggle {
   position: absolute;
   top: 1rem;
@@ -541,14 +568,12 @@ input:focus {
   width: 3rem;
 }
 
-.taskCardinfo.title {
-  font-size: 1.8rem;
-}
-
 .taskCardinfo:last-of-type {
-  height: 10rem;
   overflow-wrap: break-word;
+  overflow: auto;
   white-space: pre-wrap;
+  width: 90%;
+  margin-left: 1rem;
   align-items: initial;
   text-align: center;
 }
@@ -685,6 +710,11 @@ input:focus {
     height: 7rem;
     overflow: auto;
   }
+  .duedate {
+    font-weight: bold;
+    height: 2rem !important;
+    display: inline-block;
+  }
   .taskCard .title {
     display: inline-block;
     height: 2rem;
@@ -707,7 +737,10 @@ input:focus {
   .taskCard {
     width: 70%;
   }
-
+  .duedate,
+  .description {
+    overflow: hidden;
+  }
   .sidebarToggle,
   .createTaskModal {
     width: 2rem;
@@ -716,9 +749,17 @@ input:focus {
     top: 4rem;
   }
   .taskCardinfo.description {
-    overflow: hidden;
+    overflow: auto;
     text-align: center;
     display: inline-block;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
+  .taskCardinfo.notes {
+    width: 100%;
+    padding: 0;
+    height: 10rem;
   }
 }
 

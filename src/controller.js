@@ -27,7 +27,7 @@ export class Controller {
   // TASK CREATION
   //-----------------------------------------------------------------------------------------
   createTask = (list) => {
-    let taskTitle = title.value.trim();
+    let taskTitle = title.value.trimEnd();
     if (!taskTitle || !taskTitle.trim().length === 0) {
       alert('Task name cannot be empty!');
       return;
