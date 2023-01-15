@@ -72,6 +72,7 @@ export class Controller {
     escape.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         view.hideTaskPopup();
+        view.resetForm('popupmodal');
       }
     });
     let overlay = document.querySelector('.overlay');
@@ -79,6 +80,8 @@ export class Controller {
       view.hideTaskPopup();
       view.hideEditPopup();
       view.hideListPopup();
+      view.resetForm('popupmodal');
+      view.resetForm('listModal');
     });
 
     confirmTaskCreation.addEventListener('click', (e) => {

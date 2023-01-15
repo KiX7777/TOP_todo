@@ -112,6 +112,7 @@ class View {
       }
       if (e.key === 'Escape') {
         this.hideListPopup();
+        this.resetForm('listModal');
       }
     });
   }
