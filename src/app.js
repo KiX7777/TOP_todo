@@ -89,6 +89,16 @@ function load() {
       document.querySelector('.Default').classList.add('active');
     });
 
+    document.addEventListener('keydown', (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if (e.key === 'Escape') {
+        view.hideEditPopup();
+        view.hideListPopup();
+        view.hideTaskPopup();
+      }
+    });
+
     init();
     view.toggleTaskLists();
     view.removeCard('listsContainer', lists);
@@ -101,6 +111,7 @@ function load() {
 // ALLOW CREATING TASK
 function startTask() {
   const createTaskModal = document.querySelectorAll('.createTaskModal');
+
   createTaskModal.forEach((button) => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
