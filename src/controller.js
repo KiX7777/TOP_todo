@@ -4,6 +4,7 @@ import { Task } from './app.js';
 import { List } from './app.js';
 import view from './view.js';
 import { lists } from './app.js';
+// import { format } from 'date-fns';
 
 const createListModal = document.querySelector('.createListModal');
 const confirmTaskCreation = document.querySelector('.addTask');
@@ -33,7 +34,10 @@ export class Controller {
       return;
     } else {
       let taskDescription = description.value;
-      let taskdueDate = duedate.value;
+      let taskdueDate = new Date(duedate.value);
+      let datum = new Intl.DateTimeFormat('hr-HR').format(taskdueDate);
+      // let date = format(new Date(duedate.value), 'dd/MM/yyyy');
+      // console.log(date);
 
       let taskPriority = priority2.value;
       if (taskPriority === 'normal' || taskPriority === 'important') {

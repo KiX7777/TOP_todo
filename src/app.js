@@ -17,7 +17,7 @@ export class Task {
   constructor(title, description, dueDate, priority, notes, list) {
     (this.title = title),
       (this.description = description),
-      (this.dueDate = new Date(dueDate).toLocaleString()),
+      (this.dueDate = new Date(dueDate).toLocaleString('hr-HR')),
       (this.priority = priority),
       (this.notes = notes);
     this.isDone = false;
